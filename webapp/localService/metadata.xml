@@ -1,0 +1,564 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:DataServices
+        xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="2.0">
+        <Schema
+            xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+            xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="jetCloud.apps.zjblessons.jblesson02.v01.01">
+            <EntityType Name="zjblessons_base_HeadersExeType">
+                <Key>
+                    <PropertyRef Name="ActionID"/>
+                </Key>
+                <Property Name="SubModuleCode" Type="Edm.String" MaxLength="20"/>
+                <Property Name="ApplicationCode" Type="Edm.String" MaxLength="20"/>
+                <Property Name="SessionID" Type="Edm.String" MaxLength="32"/>
+                <Property Name="ActionID" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="EntityCode" Type="Edm.String" MaxLength="20"/>
+                <Property Name="ReferenceID" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iUserID" Type="Edm.String" MaxLength="64"/>
+                <Property Name="Terminal" Type="Edm.String" MaxLength="50"/>
+                <Property Name="Latitude" Type="Edm.Double"/>
+                <Property Name="Longitude" Type="Edm.Double"/>
+                <Property Name="iParam1" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam2" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam3" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam4" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam5" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam6" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam7" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam8" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam9" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam10" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam11" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam12" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam13" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam14" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam15" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam16" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam17" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam18" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam19" Type="Edm.String" MaxLength="128"/>
+                <Property Name="iParam20" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="zjblessons_lock_HeadersType">
+                <Key>
+                    <PropertyRef Name="ReferenceID"/>
+                </Key>
+                <Property Name="EntityCode" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="ReferenceID" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="SessionID" Type="Edm.String" MaxLength="32"/>
+                <Property Name="ActivityActionID" Type="Edm.Int16" DefaultValue="0"/>
+                <Property Name="ApplicationCode" Type="Edm.String" MaxLength="20"/>
+                <Property Name="SubModuleCode" Type="Edm.String" MaxLength="20"/>
+                <Property Name="ValidTo" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="64"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="CreatedByAvatar" Type="Edm.String" MaxLength="2083"/>
+            </EntityType>
+            <EntityType Name="zjblessons_settings_HeadersType">
+                <Key>
+                    <PropertyRef Name="SmartVariantID"/>
+                    <PropertyRef Name="isFavorites"/>
+                </Key>
+                <Property Name="SmartVariantID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="persistencyKey" Type="Edm.String" MaxLength="128"/>
+                <Property Name="Version" Type="Edm.String" DefaultValue="A" MaxLength="1"/>
+                <Property Name="SettingText" Type="Edm.String" MaxLength="64"/>
+                <Property Name="SettingDescription" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Default_F" Type="Edm.String" MaxLength="1"/>
+                <Property Name="Favorite_F" Type="Edm.String" MaxLength="1"/>
+                <Property Name="Public_F" Type="Edm.String" MaxLength="1"/>
+                <Property Name="Value" Type="Edm.String" MaxLength="2147483647"/>
+                <Property Name="ApplicationCode" Type="Edm.String" MaxLength="20"/>
+                <Property Name="SubModuleCode" Type="Edm.String" MaxLength="20"/>
+                <Property Name="EntityCode" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="CreatedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="Enabled" Type="Edm.String" MaxLength="5"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+                <Property Name="isFavorites" Type="Edm.String" Nullable="false" MaxLength="1"/>
+            </EntityType>
+            <EntityType Name="MaterialIDType">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="HeaderIDType">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="jbcommon_auth_CreatedByType">
+                <Key>
+                    <PropertyRef Name="CreatedBy"/>
+                </Key>
+                <Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+            </EntityType>
+            <EntityType Name="jbcommon_auth_ModifiedByType">
+                <Key>
+                    <PropertyRef Name="ModifiedBy"/>
+                </Key>
+                <Property Name="ModifiedBy" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="ModifiedByFullName" Type="Edm.String" MaxLength="121"/>
+            </EntityType>
+            <EntityType Name="zjblessons_base_GroupsType">
+                <Key>
+                    <PropertyRef Name="GroupID"/>
+                </Key>
+                <Property Name="GroupID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Version" Type="Edm.String" DefaultValue="A" MaxLength="1"/>
+                <Property Name="Language" Type="Edm.String" DefaultValue="EN" MaxLength="2"/>
+                <Property Name="GroupText" Type="Edm.String" MaxLength="256"/>
+                <Property Name="GroupDescription" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="CreatedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="ModifiedByAvatar" Type="Edm.String" MaxLength="2083"/>
+            </EntityType>
+            <EntityType Name="zjblessons_base_GroupsAType">
+                <Key>
+                    <PropertyRef Name="GroupID"/>
+                </Key>
+                <Property Name="GroupID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Version" Type="Edm.String" Nullable="false" DefaultValue="A" MaxLength="1"/>
+                <Property Name="Language" Type="Edm.String" DefaultValue="EN" MaxLength="2"/>
+                <Property Name="GroupText" Type="Edm.String" MaxLength="256"/>
+                <Property Name="GroupDescription" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="CreatedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="ModifiedByAvatar" Type="Edm.String" MaxLength="2083"/>
+            </EntityType>
+            <EntityType Name="zjblessons_base_HeadersType">
+                <Key>
+                    <PropertyRef Name="HeaderID"/>
+                </Key>
+                <Property Name="Version" Type="Edm.String" DefaultValue="A" MaxLength="1"/>
+                <Property Name="HeaderID" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="DocumentNumber" Type="Edm.String" MaxLength="64"/>
+                <Property Name="DocumentDate" Type="Edm.DateTime" sap:display-format="Date"/>
+                <Property Name="PlantID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="PlantText" Type="Edm.String" MaxLength="64"/>
+                <Property Name="RegionID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="RegionText" Type="Edm.String" MaxLength="64"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="CreatedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="ModifiedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="zjblessons_base_ItemsType">
+                <Key>
+                    <PropertyRef Name="ItemID"/>
+                    <PropertyRef Name="HeaderID"/>
+                </Key>
+                <Property Name="ItemID" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="HeaderID" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="MaterialID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="GroupID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="SubGroupID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="MaterialText" Type="Edm.String" MaxLength="128"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Precision="15" Scale="2"/>
+                <Property Name="Price" Type="Edm.Decimal" Precision="15" Scale="2"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="CreatedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="ModifiedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="zjblessons_base_MaterialsType">
+                <Key>
+                    <PropertyRef Name="MaterialID"/>
+                </Key>
+                <Property Name="MaterialID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Version" Type="Edm.String" DefaultValue="A" MaxLength="1"/>
+                <Property Name="Rating" Type="Edm.Decimal" Precision="3" Scale="2"/>
+                <Property Name="Language" Type="Edm.String" Nullable="false" DefaultValue="EN" MaxLength="2"/>
+                <Property Name="GroupID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="GroupText" Type="Edm.String" MaxLength="256"/>
+                <Property Name="SubGroupID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="SubGroupText" Type="Edm.String" MaxLength="256"/>
+                <Property Name="MaterialText" Type="Edm.String" MaxLength="128"/>
+                <Property Name="MaterialDescription" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="CreatedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="ModifiedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="zjblessons_base_MaterialsAType">
+                <Key>
+                    <PropertyRef Name="MaterialID"/>
+                </Key>
+                <Property Name="MaterialID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Version" Type="Edm.String" Nullable="false" DefaultValue="A" MaxLength="1"/>
+                <Property Name="Rating" Type="Edm.Decimal" Precision="3" Scale="2"/>
+                <Property Name="Language" Type="Edm.String" Nullable="false" DefaultValue="EN" MaxLength="2"/>
+                <Property Name="GroupID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="GroupText" Type="Edm.String" MaxLength="256"/>
+                <Property Name="SubGroupID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="SubGroupText" Type="Edm.String" MaxLength="256"/>
+                <Property Name="MaterialText" Type="Edm.String" MaxLength="128"/>
+                <Property Name="MaterialDescription" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="CreatedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="ModifiedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="zjblessons_base_PlantsType">
+                <Key>
+                    <PropertyRef Name="PlantID"/>
+                </Key>
+                <Property Name="Version" Type="Edm.String" DefaultValue="A" MaxLength="1"/>
+                <Property Name="Language" Type="Edm.String" Nullable="false" DefaultValue="EN" MaxLength="2"/>
+                <Property Name="PlantID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="PlantText" Type="Edm.String" MaxLength="64"/>
+                <Property Name="RegionID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="RegionText" Type="Edm.String" MaxLength="64"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="CreatedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="ModifiedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="zjblessons_base_PlantsAType">
+                <Key>
+                    <PropertyRef Name="PlantID"/>
+                </Key>
+                <Property Name="Version" Type="Edm.String" Nullable="false" DefaultValue="A" MaxLength="1"/>
+                <Property Name="Language" Type="Edm.String" Nullable="false" DefaultValue="EN" MaxLength="2"/>
+                <Property Name="PlantID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="PlantText" Type="Edm.String" MaxLength="64"/>
+                <Property Name="RegionID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="RegionText" Type="Edm.String" MaxLength="64"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="CreatedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="ModifiedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="zjblessons_base_RegionsType">
+                <Key>
+                    <PropertyRef Name="RegionID"/>
+                </Key>
+                <Property Name="Version" Type="Edm.String" DefaultValue="A" MaxLength="1"/>
+                <Property Name="Language" Type="Edm.String" Nullable="false" DefaultValue="EN" MaxLength="2"/>
+                <Property Name="RegionID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="RegionText" Type="Edm.String" MaxLength="64"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="CreatedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="ModifiedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="zjblessons_base_RegionsAType">
+                <Key>
+                    <PropertyRef Name="RegionID"/>
+                </Key>
+                <Property Name="Version" Type="Edm.String" Nullable="false" DefaultValue="A" MaxLength="1"/>
+                <Property Name="Language" Type="Edm.String" Nullable="false" DefaultValue="EN" MaxLength="2"/>
+                <Property Name="RegionID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="RegionText" Type="Edm.String" MaxLength="64"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="CreatedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="ModifiedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="zjblessons_base_SubGroupsType">
+                <Key>
+                    <PropertyRef Name="SubGroupID"/>
+                </Key>
+                <Property Name="SubGroupID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Version" Type="Edm.String" DefaultValue="A" MaxLength="1"/>
+                <Property Name="Language" Type="Edm.String" Nullable="false" DefaultValue="EN" MaxLength="2"/>
+                <Property Name="SubGroupText" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="GroupID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="CreatedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="ModifiedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="zjblessons_base_SubGroupsAType">
+                <Key>
+                    <PropertyRef Name="SubGroupID"/>
+                </Key>
+                <Property Name="SubGroupID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Version" Type="Edm.String" Nullable="false" DefaultValue="A" MaxLength="1"/>
+                <Property Name="Language" Type="Edm.String" Nullable="false" DefaultValue="EN" MaxLength="2"/>
+                <Property Name="SubGroupText" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="GroupID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="CreatedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="CreatedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedByFullName" Type="Edm.String" MaxLength="121"/>
+                <Property Name="ModifiedByAvatar" Type="Edm.String" MaxLength="2083"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="tGroupsType">
+                <Key>
+                    <PropertyRef Name="Instance"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="Instance" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Version" Type="Edm.String" DefaultValue="A" MaxLength="1"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+            </EntityType>
+            <EntityType Name="tGroupsTextType">
+                <Key>
+                    <PropertyRef Name="Instance"/>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="Language"/>
+                </Key>
+                <Property Name="Instance" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Language" Type="Edm.String" Nullable="false" DefaultValue="EN" MaxLength="2"/>
+                <Property Name="GroupText" Type="Edm.String" MaxLength="256"/>
+                <Property Name="GroupDescription" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="tHeadersType">
+                <Key>
+                    <PropertyRef Name="Instance"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="Instance" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Version" Type="Edm.String" DefaultValue="A" MaxLength="1"/>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="DocumentNumber" Type="Edm.String" MaxLength="64"/>
+                <Property Name="DocumentDate" Type="Edm.DateTime" sap:display-format="Date"/>
+                <Property Name="PlantID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="tItemsType">
+                <Key>
+                    <PropertyRef Name="Instance"/>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="HeaderID"/>
+                </Key>
+                <Property Name="Instance" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="HeaderID" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="MaterialID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Precision="15" Scale="2"/>
+                <Property Name="Price" Type="Edm.Decimal" Precision="15" Scale="2"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="tMaterialsType">
+                <Key>
+                    <PropertyRef Name="Instance"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="Instance" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Version" Type="Edm.String" DefaultValue="A" MaxLength="1"/>
+                <Property Name="GroupID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="SubGroupID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+                <Property Name="Rating" Type="Edm.Decimal" Precision="3" Scale="2"/>
+            </EntityType>
+            <EntityType Name="tPlantsType">
+                <Key>
+                    <PropertyRef Name="Instance"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="Instance" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Version" Type="Edm.String" DefaultValue="A" MaxLength="1"/>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="RegionID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="tPlantsTextType">
+                <Key>
+                    <PropertyRef Name="Instance"/>
+                    <PropertyRef Name="Language"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="Instance" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Language" Type="Edm.String" Nullable="false" DefaultValue="EN" MaxLength="2"/>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="PlantText" Type="Edm.String" MaxLength="64"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="tRegionsType">
+                <Key>
+                    <PropertyRef Name="Instance"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="Instance" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Version" Type="Edm.String" DefaultValue="A" MaxLength="1"/>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="tRegionsTextType">
+                <Key>
+                    <PropertyRef Name="Instance"/>
+                    <PropertyRef Name="Language"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="Instance" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Language" Type="Edm.String" Nullable="false" DefaultValue="EN" MaxLength="2"/>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="RegionText" Type="Edm.String" MaxLength="64"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="tSubGroupsType">
+                <Key>
+                    <PropertyRef Name="Instance"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="Instance" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Version" Type="Edm.String" DefaultValue="A" MaxLength="1"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+                <Property Name="GroupID" Type="Edm.String" MaxLength="10"/>
+            </EntityType>
+            <EntityType Name="tSubGroupsTextType">
+                <Key>
+                    <PropertyRef Name="Instance"/>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="Language"/>
+                </Key>
+                <Property Name="Instance" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Language" Type="Edm.String" Nullable="false" DefaultValue="EN" MaxLength="2"/>
+                <Property Name="SubGroupText" Type="Edm.String" MaxLength="256"/>
+                <Property Name="Created" Type="Edm.DateTime"/>
+                <Property Name="Modified" Type="Edm.DateTime"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="ModifiedBy" Type="Edm.String" MaxLength="256"/>
+                <Property Name="IntegrationID" Type="Edm.String" MaxLength="128"/>
+            </EntityType>
+            <EntityContainer Name="01" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="zjblessons_base_HeadersExe" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_HeadersExeType" sap:updatable="false" sap:deletable="false"/>
+                <EntitySet Name="zjblessons_lock_Headers" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_lock_HeadersType" sap:updatable="false" sap:deletable="false"/>
+                <EntitySet Name="zjblessons_settings_Headers" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_settings_HeadersType"/>
+                <EntitySet Name="MaterialID" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.MaterialIDType" sap:creatable="false" sap:updatable="false" sap:deletable="false"/>
+                <EntitySet Name="HeaderID" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.HeaderIDType" sap:creatable="false" sap:updatable="false" sap:deletable="false"/>
+                <EntitySet Name="jbcommon_auth_CreatedBy" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.jbcommon_auth_CreatedByType"/>
+                <EntitySet Name="jbcommon_auth_ModifiedBy" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.jbcommon_auth_ModifiedByType"/>
+                <EntitySet Name="zjblessons_base_Groups" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_GroupsType"/>
+                <EntitySet Name="zjblessons_base_GroupsA" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_GroupsAType"/>
+                <EntitySet Name="zjblessons_base_Headers" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_HeadersType"/>
+                <EntitySet Name="zjblessons_base_Items" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_ItemsType"/>
+                <EntitySet Name="zjblessons_base_Materials" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType"/>
+                <EntitySet Name="zjblessons_base_MaterialsA" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsAType"/>
+                <EntitySet Name="zjblessons_base_Plants" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_PlantsType"/>
+                <EntitySet Name="zjblessons_base_PlantsA" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_PlantsAType"/>
+                <EntitySet Name="zjblessons_base_Regions" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_RegionsType"/>
+                <EntitySet Name="zjblessons_base_RegionsA" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_RegionsAType"/>
+                <EntitySet Name="zjblessons_base_SubGroups" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_SubGroupsType"/>
+                <EntitySet Name="zjblessons_base_SubGroupsA" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_SubGroupsAType"/>
+                <EntitySet Name="tGroups" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.tGroupsType"/>
+                <EntitySet Name="tGroupsText" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.tGroupsTextType"/>
+                <EntitySet Name="tHeaders" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.tHeadersType"/>
+                <EntitySet Name="tItems" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.tItemsType"/>
+                <EntitySet Name="tMaterials" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.tMaterialsType"/>
+                <EntitySet Name="tPlants" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.tPlantsType"/>
+                <EntitySet Name="tPlantsText" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.tPlantsTextType"/>
+                <EntitySet Name="tRegions" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.tRegionsType"/>
+                <EntitySet Name="tRegionsText" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.tRegionsTextType"/>
+                <EntitySet Name="tSubGroups" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.tSubGroupsType"/>
+                <EntitySet Name="tSubGroupsText" EntityType="jetCloud.apps.zjblessons.jblesson02.v01.01.tSubGroupsTextType"/>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

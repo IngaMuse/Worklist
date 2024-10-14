@@ -1,101 +1,73 @@
-<mvc:View
-	controllerName="zjblessons.Worklist.controller.Worklist"
+<mvc:View controllerName="zjblessons.Worklist.controller.Worklist"
 	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic">
+	xmlns:mvc="sap.ui.core.mvc">
 
-	<semantic:SemanticPage
-		id="page"
-		headerPinnable="false"
-		toggleHeaderOnTitleClick="false">
-
-		<semantic:titleHeading>
-			<Title text="{i18n>worklistTitle}" />
-		</semantic:titleHeading>
-
-		<semantic:content>
-			<Table
-				id="table"
-				width="auto"
-				items="{
+	<Page >
+		<customHeader>
+			<Bar>
+				<contentLeft>
+					<Title class='sapUiMediumMarginBegin' text ='{i18n>worklistTitle}'/>
+				</contentLeft>
+			</Bar>
+		</customHeader>
+		<Table id="table" width="auto" items="{
 					path: '/zjblessons_base_Headers',
 					sorter: {
 						path: 'DocumentNumber',
 						descending: false
 					}
-				}"
-				noDataText="{worklistView>/tableNoDataText}"
-				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
-				growing="true"
-				growingThreshold = "15"
-				growingScrollToLoad="true"
-				updateFinished="onUpdateFinished">
-
-				<headerToolbar>
-					<Toolbar>
-						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>
-						<ToolbarSpacer />
-						<SearchField
-							id="searchField"
-							tooltip="{i18n>worklistSearchTooltip}"
-							search="onSearch"
-							width="auto">
-						</SearchField>
-					</Toolbar>
-				</headerToolbar>
-
-				<columns>
-					<Column>
-						<Text text="{i18n>tableNameColumnTitle}"/>
-					</Column>
-					<Column>
-						<Text text="{i18n>tableNameColumnTitleDocumentDate}"/>
-					</Column>
-					<Column>
-						<Text text="{i18n>tableNameColumnTitlePlantText}"/>
-					</Column>
-					<Column>
-						<Text text="{i18n>tableNameColumnTitleRegionText}"/>
-					</Column>
-					<Column>
-						<Text text="{i18n>tableNameColumnTitleDescription}"/>
-					</Column>
-					<Column>
-						<Text text="{i18n>tableNameColumnTitleCreated}"/>
-					</Column>
-				</columns>
-
-				<items>
-					<ColumnListItem
-						type="Navigation"
-						press="onPress">
-						<cells>
-							<ObjectIdentifier
-								title="{DocumentNumber}"/>
-								<ObjectIdentifier
-								title="{
+				}" growing="true"
+				growingThreshold = "15" growingScrollToLoad="true" >
+			<headerToolbar>
+				<Toolbar>
+					<Title id="tableHeader" text="{i18n>worklistTitleTable}"/>
+					<ToolbarSpacer />
+					<SearchField tooltip="{i18n>worklistSearchTooltip}" 
+					showSearchButton = 'false'
+					change="onSearch" liveChange="onLiveSearch" width="auto">
+					</SearchField>
+				</Toolbar>
+			</headerToolbar>
+			<columns>
+				<Column>
+					<Text text="{i18n>tableNameColumnTitle}"/>
+				</Column>
+				<Column>
+					<Text text="{i18n>tableNameColumnTitleDocumentDate}"/>
+				</Column>
+				<Column>
+					<Text text="{i18n>tableNameColumnTitlePlantText}"/>
+				</Column>
+				<Column>
+					<Text text="{i18n>tableNameColumnTitleRegionText}"/>
+				</Column>
+				<Column>
+					<Text text="{i18n>tableNameColumnTitleDescription}"/>
+				</Column>
+				<Column>
+					<Text text="{i18n>tableNameColumnTitleCreated}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem type="Navigation" press="onPress">
+					<cells>
+						<ObjectIdentifier title="{DocumentNumber}"/>
+						<ObjectIdentifier title="{
 								path: 'DocumentDate',
 								type: 'sap.ui.model.type.Date',
 								formatOptions: {style: 'short'}
 								}"/>
-								<ObjectIdentifier
-								title="{PlantText}"/>
-								<ObjectIdentifier
-								title="{RegionText}"/>
-								<ObjectIdentifier
-								title="{Description}"/>
-								<ObjectIdentifier
-								title="{
+						<ObjectIdentifier title="{PlantText}"/>
+						<ObjectIdentifier title="{RegionText}"/>
+						<ObjectIdentifier title="{Description}"/>
+						<ObjectIdentifier title="{
 								path: 'Created',
 								type: 'sap.ui.model.type.DateTime',
 								formatOptions: {pattern: 'HH:mm dd/MM/yyyy'}
 								}"/>
-						</cells>
-					</ColumnListItem>
-				</items>
-			</Table>
-		</semantic:content>
-
-	</semantic:SemanticPage>
-
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</Page>
 </mvc:View>

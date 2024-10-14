@@ -68,7 +68,11 @@
 			},
 			"": {
 				"dataSource": "mainService",
-				"preload": true
+				"preload": true,
+				"settings": {
+					"defaultCountMode": false,
+					"defaultBindingMode": "TwoWay"
+				}
 			}
 		},
 		"routing": {

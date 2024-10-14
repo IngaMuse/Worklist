@@ -44,8 +44,23 @@
 				</headerToolbar>
 
 				<columns>
-					<Column id="nameColumn">
-						<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>
+					<Column>
+						<Text text="{i18n>tableNameColumnTitle}"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>tableNameColumnTitleDocumentDate}"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>tableNameColumnTitlePlantText}"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>tableNameColumnTitleRegionText}"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>tableNameColumnTitleDescription}"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>tableNameColumnTitleCreated}"/>
 					</Column>
 				</columns>
 
@@ -56,16 +71,21 @@
 						<cells>
 							<ObjectIdentifier
 								title="{DocumentNumber}"/>
+								<ObjectIdentifier
+								title="{DocumentDate}"/>
+								<ObjectIdentifier
+								title="{PlantText}"/>
+								<ObjectIdentifier
+								title="{RegionText}"/>
+								<ObjectIdentifier
+								title="{Description}"/>
+								<ObjectIdentifier
+								title="{Created}"/>
 						</cells>
 					</ColumnListItem>
 				</items>
 			</Table>
 		</semantic:content>
-
-		<semantic:sendEmailAction>
-			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
-		</semantic:sendEmailAction>
-
 
 	</semantic:SemanticPage>
 

@@ -27,6 +27,7 @@
 				noDataText="{worklistView>/tableNoDataText}"
 				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
 				growing="true"
+				growingThreshold = "15"
 				growingScrollToLoad="true"
 				updateFinished="onUpdateFinished">
 

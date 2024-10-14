@@ -72,7 +72,11 @@
 							<ObjectIdentifier
 								title="{DocumentNumber}"/>
 								<ObjectIdentifier
-								title="{DocumentDate}"/>
+								title="{
+								path: 'DocumentDate',
+								type: 'sap.ui.model.type.Date',
+								formatOptions: {style: 'short'}
+								}"/>
 								<ObjectIdentifier
 								title="{PlantText}"/>
 								<ObjectIdentifier
@@ -80,7 +84,11 @@
 								<ObjectIdentifier
 								title="{Description}"/>
 								<ObjectIdentifier
-								title="{Created}"/>
+								title="{
+								path: 'Created',
+								type: 'sap.ui.model.type.DateTime',
+								formatOptions: {pattern: 'HH:mm dd/MM/yyyy'}
+								}"/>
 						</cells>
 					</ColumnListItem>
 				</items>

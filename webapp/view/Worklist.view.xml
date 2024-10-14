@@ -13,8 +13,8 @@
 		<Table id="table" width="auto" items="{
 					path: '/zjblessons_base_Headers',
 					sorter: {
-						path: 'DocumentNumber',
-						descending: false
+						path: 'DocumentDate',
+						descending: true
 					}
 				}" growing="true"
 				growingThreshold = "15" growingScrollToLoad="true" >

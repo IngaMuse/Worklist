@@ -22,7 +22,16 @@
 				<Toolbar>
 					<Title id="tableHeader" text="{i18n>worklistTitleTable}"/>
 					<ToolbarSpacer />
-					<SearchField tooltip="{i18n>worklistSearchTooltip}" 
+					<SearchField 
+					id = 'searchField'
+					tooltip="{i18n>worklistSearchTooltip}" 
+					showSearchButton = 'false'
+					change="onSearch" liveChange="onLiveSearch" width="auto">
+					</SearchField>
+					<SearchField 
+					id = 'searchFieldPlantText'
+					tooltip="{i18n>worklistSearchTooltipPlantText}" 
+					placeholder="{i18n>worklistSearchPlaceholder}" 
 					showSearchButton = 'false'
 					change="onSearch" liveChange="onLiveSearch" width="auto">
 					</SearchField>

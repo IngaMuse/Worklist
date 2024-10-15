@@ -2,38 +2,31 @@
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc">
 
-	<Page >
-		<customHeader>
-			<Bar>
-				<contentLeft>
-					<Title class='sapUiMediumMarginBegin' text ='{i18n>worklistTitle}'/>
-				</contentLeft>
-			</Bar>
-		</customHeader>
-		<Table id="table" width="auto" items="{
-					path: '/zjblessons_base_Headers',
-					sorter: {
-						path: 'DocumentDate',
-						descending: true
-					}
-				}" growing="true"
-				growingThreshold = "15" growingScrollToLoad="true" >
+	<Page 
+	showHeader="false"
+	>
+		<Table 
+				id='table' 
+				width="auto" 
+				growing="true"
+				growingThreshold = "15" 
+				growingScrollToLoad="true" >
 			<headerToolbar>
 				<Toolbar>
-					<Title id="tableHeader" text="{i18n>worklistTitleTable}"/>
+					<Title id='tableHeader' text="{i18n>worklistTitleTable}"/>
 					<ToolbarSpacer />
 					<SearchField 
 					id = 'searchField'
 					tooltip="{i18n>worklistSearchTooltip}" 
 					showSearchButton = 'false'
-					change="onSearch" liveChange="onLiveSearch" width="auto">
+					change='onSearch' liveChange='onLiveSearch' width="auto">
 					</SearchField>
 					<SearchField 
 					id = 'searchFieldPlantText'
 					tooltip="{i18n>worklistSearchTooltipPlantText}" 
 					placeholder="{i18n>worklistSearchPlaceholder}" 
 					showSearchButton = 'false'
-					change="onSearch" liveChange="onLiveSearch" width="auto">
+					change='onSearch' liveChange='onLiveSearch' width="auto">
 					</SearchField>
 				</Toolbar>
 			</headerToolbar>
@@ -57,26 +50,6 @@
 					<Text text="{i18n>tableNameColumnTitleCreated}"/>
 				</Column>
 			</columns>
-			<items>
-				<ColumnListItem type="Navigation" press="onPress">
-					<cells>
-						<ObjectIdentifier title="{DocumentNumber}"/>
-						<ObjectIdentifier title="{
-								path: 'DocumentDate',
-								type: 'sap.ui.model.type.Date',
-								formatOptions: {style: 'short'}
-								}"/>
-						<ObjectIdentifier title="{PlantText}"/>
-						<ObjectIdentifier title="{RegionText}"/>
-						<ObjectIdentifier title="{Description}"/>
-						<ObjectIdentifier title="{
-								path: 'Created',
-								type: 'sap.ui.model.type.DateTime',
-								formatOptions: {pattern: 'HH:mm dd/MM/yyyy'}
-								}"/>
-					</cells>
-				</ColumnListItem>
-			</items>
 		</Table>
 	</Page>
 </mvc:View>

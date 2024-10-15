@@ -13,7 +13,7 @@
 				growingScrollToLoad="true" >
 			<headerToolbar>
 				<Toolbar>
-					<Title id='tableHeader' text="{i18n>worklistTitleTable}"/>
+					<Title id='tableHeader' text="({= ${worklistView>/sCount}})"/>
 					<ToolbarSpacer />
 					<SearchField 
 					id = 'searchField'

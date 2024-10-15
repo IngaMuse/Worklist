@@ -14,10 +14,11 @@ sap.ui.define(
       formatter: formatter,
 
       onInit: function () {
-        const oViewModel = new JSONModel();
+        const oViewModel = new JSONModel({
+          sCount: '0'
+        });
         this.setModel(oViewModel, "worklistView");
       },
-
 
       onBeforeRendering: function() {
         this._bindTable();
@@ -32,6 +33,19 @@ sap.ui.define(
           urlParameters: {
               $select: 'HeaderID,DocumentNumber,DocumentDate,PlantText,RegionText,Description,Created'
           },
+          events: {
+            dataRequested: (oData) => {
+              this._getTableCounter();
+            }
+          }
+        })
+      },
+
+      _getTableCounter() {
+        this.getModel().read('/zjblessons_base_Headers/$count', {
+          success: (sCount) => {
+            this.getModel('worklistView').setProperty('/sCount', sCount)
+          }
         })
       },
 
@@ -62,8 +76,6 @@ sap.ui.define(
         })
         return oTemplate;
       },
-
-
 
 
 

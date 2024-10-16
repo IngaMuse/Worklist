@@ -19,56 +19,27 @@ sap.ui.define(
 
       onSearch(oEvent) {
         const sValue = oEvent.getParameter("value");
-        this._searchHandler(sValue);
+        let sValueType;
+        oEvent.getSource().sId.includes('Plant') ? sValueType = "Plant" : sValueType = "Search";
+        this._searchHandler(sValue, sValueType);
+        debugger;
       },
       onLiveSearch(oEvent) {
         const sValue = oEvent.getParameter("newValue");
-        this._searchHandler(sValue);
+        let sValueType;
+        oEvent.getSource().sId.includes('Plant') ? sValueType = "Plant" : sValueType = "Search";
+        this._searchHandler(sValue, sValueType);
       },
 
-      _searchHandler(sValue) {
+      _searchHandler(sValue, sValueType) {
         const oTable = this.getView().byId("table"),
           oFilter = !!sValue.length
-            ? new Filter({
-                filters: [
-                  new Filter("DocumentNumber", FilterOperator.Contains, sValue),
-                  new Filter("PlantText", FilterOperator.EQ, sValue),
-                ],
-              })
+            ? sValueType==="Search"?new Filter('DocumentNumber', FilterOperator.Contains, sValue):
+            new Filter('PlantText', FilterOperator.EQ, sValue)
             : [];
         oTable.getBinding("items").filter(oFilter);
       },
 
-      onPress: function (oEvent) {
-        this._showObject(oEvent.getSource());
-      },
-
-      onNavBack: function () {
-        history.go(-1);
-      },
-
-      onRefresh: function () {
-        var oTable = this.byId("table");
-        oTable.getBinding("items").refresh();
-      },
-
-      _showObject: function (oItem) {
-        this.getRouter().navTo("object", {
-          objectId: oItem.getBindingContext().getProperty("HeaderID"),
-        });
-      },
-
-      _applySearch: function (aTableSearchState) {
-        var oTable = this.byId("table"),
-          oViewModel = this.getModel("worklistView");
-        oTable.getBinding("items").filter(aTableSearchState, "Application");
-        if (aTableSearchState.length !== 0) {
-          oViewModel.setProperty(
-            "/tableNoDataText",
-            this.getResourceBundle().getText("worklistNoDataWithSearchText")
-          );
-        }
-      },
     });
   }
 );

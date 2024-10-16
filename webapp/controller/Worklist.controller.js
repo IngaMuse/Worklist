@@ -7,6 +7,7 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/core/Fragment",
+    "sap/m/MessageToast",
   ],
   function (
     BaseController,
@@ -15,7 +16,8 @@ sap.ui.define(
     Sorter,
     Filter,
     FilterOperator,
-    Fragment
+    Fragment,
+    MessageToast
   ) {
     "use strict";
 
@@ -112,6 +114,11 @@ sap.ui.define(
             this.getModel().remove(sKey)
           }.bind(this)
       });
+      },
+
+      onPressRefresh() {
+        MessageToast.show('Refresh');
+        this._bindTable();
       },
 
 

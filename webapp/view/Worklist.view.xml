@@ -33,7 +33,11 @@
 							type="Emphasized"
 							press='onPressCreate'
 					/>
-					
+					<Button
+							icon="sap-icon://refresh"
+							type="Transparent"
+							press='onPressRefresh'
+					/>
 				</Toolbar>
 			</headerToolbar>
 			<columns>

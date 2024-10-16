@@ -1,0 +1,75 @@
+<c:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:c="sap.ui.core"
+>
+  <Dialog class='sapUiContentPadding' beforeOpen="onDialogBeforeOpen" title="Create header">
+  <content>
+    <VBox>
+        <!-- <VBox>
+            <Label text="HeaderID"
+                labelFor="idHeaderID"
+            />
+            <Input
+              value="{HeaderID}"
+              id="idHeaderIDInput"
+            />
+        </VBox> -->
+        <VBox>
+            <Label text="DocumentNumber"
+                labelFor="idDocumentNumber"
+            />
+            <Input
+              value="{DocumentNumber}"
+              id="idDocumentNumberInput"
+            />
+        </VBox>
+        <VBox>
+            <Label text="PlantText"
+                labelFor="idPlantText"
+            />
+            <Input
+              value="{PlantText}"
+              id="idPlantTextInput"
+            />
+        </VBox>
+        <VBox>
+            <Label text="RegionText"
+                labelFor="idRegionText"
+            />
+            <Input
+              value="{RegionText}"
+              id="idRegionTextInput"
+            />
+        </VBox>
+        <VBox>
+            <Label text="Description"
+                labelFor="idDescription"
+            />
+            <TextArea
+                maxLength="256"
+                rows="3"
+                width="100%"
+                value="{Description}"
+                id="idDescriptionTextArea"
+            />
+        </VBox>
+    </VBox>
+  </content>
+    
+    <beginButton>
+    <Button
+        text="Save"
+        type="Emphasized"
+        press='onPressSave'
+    />
+    </beginButton>
+
+    <endButton>
+    <Button
+        text="Cancel"
+        type="Transparent"
+        press='onPressCancel'
+    />
+    </endButton>
+  </Dialog>
+</c:FragmentDefinition>

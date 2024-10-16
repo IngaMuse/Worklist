@@ -14,7 +14,6 @@
 			<headerToolbar>
 				<Toolbar>
 					<Title id='tableHeader' text="({= ${worklistView>/sCount}})"/>
-					<ToolbarSpacer />
 					<SearchField 
 					id = 'searchField'
 					tooltip="{i18n>worklistSearchTooltip}" 
@@ -28,6 +27,13 @@
 					showSearchButton = 'false'
 					change='onSearch' liveChange='onLiveSearch' width="auto">
 					</SearchField>
+					<ToolbarSpacer />
+					<Button
+							icon="sap-icon://add"
+							type="Emphasized"
+							press='onPressCreate'
+					/>
+
 				</Toolbar>
 			</headerToolbar>
 			<columns>

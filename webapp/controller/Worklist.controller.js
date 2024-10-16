@@ -6,8 +6,9 @@ sap.ui.define(
     "sap/ui/model/Sorter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/ui/core/Fragment",
   ],
-  function (BaseController, JSONModel, formatter, Sorter, Filter, FilterOperator) {
+  function (BaseController, JSONModel, formatter, Sorter, Filter, FilterOperator, Fragment) {
     "use strict";
 
     return BaseController.extend("zjblessons.Worklist.controller.Worklist", {
@@ -52,7 +53,6 @@ sap.ui.define(
       _getTableTemplate() {
         const oTemplate = new sap.m.ColumnListItem({
           type: 'Navigation',
-          navigated: true,
           cells: [
             new sap.m.Text({
               text: '{DocumentNumber}'
@@ -77,10 +77,6 @@ sap.ui.define(
         return oTemplate;
       },
 
-
-
-
-
       onSearch(oEvent) {
         const sValue = oEvent.getParameter("value");
         this._searchHandler(sValue);
@@ -103,35 +99,43 @@ sap.ui.define(
         oTable.getBinding("items").filter(oFilter);
       },
 
-      onPress: function (oEvent) {
-        this._showObject(oEvent.getSource());
+
+      onPressCreate() {
+        this._loadCreateDialog();
       },
 
-      onNavBack: function () {
-        history.go(-1);
-      },
-
-      onRefresh: function () {
-        var oTable = this.byId("table");
-        oTable.getBinding("items").refresh();
-      },
-
-      _showObject: function (oItem) {
-        this.getRouter().navTo("object", {
-          objectId: oItem.getBindingContext().getProperty("HeaderID"),
+      _loadCreateDialog: async function () {
+        this._oDialog = await Fragment.load({
+          name: 'zjblessons.Worklist.view.fragment.CreateDialog',
+          controller: this,
+          id: 'Dialog'
+        }).then(oDialog => {
+          this.getView().addDependent(oDialog);
+          return oDialog
         });
+        this._oDialog.open();
       },
 
-      _applySearch: function (aTableSearchState) {
-        var oTable = this.byId("table"),
-          oViewModel = this.getModel("worklistView");
-        oTable.getBinding("items").filter(aTableSearchState, "Application");
-        if (aTableSearchState.length !== 0) {
-          oViewModel.setProperty(
-            "/tableNoDataText",
-            this.getResourceBundle().getText("worklistNoDataWithSearchText")
-          );
-        }
+      onDialogBeforeOpen(oEvent) {
+        const oDialog = oEvent.getSource();
+        const oParams = {
+          Version: 'A',
+          HeaderID: '0'
+        };
+        const oEntry = this.getModel().createEntry('/zjblessons_base_Headers', { properties: oParams });
+        oDialog.setBindingContext(oEntry);
+      },
+      onPressCancel() {
+        this.getModel().resetChanges();
+        this._oDialog.close();
+      },
+      onPressSave(oEvent) {
+        this.getModel().submitChanges({
+          success: () => {
+            this._bindTable();
+          }
+        });
+        this._oDialog.close();
       },
     });
   }

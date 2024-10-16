@@ -102,11 +102,18 @@ sap.ui.define(
 
       _onPressDelete(oEvent) {
         const oBindingContext = oEvent.getSource().getBindingContext(),
-          sKey = this.getModel().createKey('/zjblessons_base_Headers', {
-            HeaderID: oBindingContext.getProperty('HeaderID')
-          });
-        this.getModel().remove(sKey);
+        sKey = this.getModel().createKey('/zjblessons_base_Headers', {
+          HeaderID: oBindingContext.getProperty('HeaderID')
+        });
+        sap.m.MessageBox.confirm("Do you really want to delete this entry?", {
+          title: "Delete confirmation",
+          actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+          onClose: function (oAction) { if(oAction === sap.m.MessageBox.Action.YES)
+            this.getModel().remove(sKey)
+          }.bind(this)
+      });
       },
+
 
       onSearch(oEvent) {
         const sValue = oEvent.getParameter("value");

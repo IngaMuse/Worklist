@@ -33,7 +33,7 @@
 							type="Emphasized"
 							press='onPressCreate'
 					/>
-
+					
 				</Toolbar>
 			</headerToolbar>
 			<columns>
@@ -54,6 +54,9 @@
 				</Column>
 				<Column>
 					<Text text="{i18n>tableNameColumnTitleCreated}"/>
+				</Column>
+					<Column width="5%">
+					<Text text=""/>
 				</Column>
 			</columns>
 		</Table>

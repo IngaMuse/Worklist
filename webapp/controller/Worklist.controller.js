@@ -8,7 +8,15 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/core/Fragment",
   ],
-  function (BaseController, JSONModel, formatter, Sorter, Filter, FilterOperator, Fragment) {
+  function (
+    BaseController,
+    JSONModel,
+    formatter,
+    Sorter,
+    Filter,
+    FilterOperator,
+    Fragment
+  ) {
     "use strict";
 
     return BaseController.extend("zjblessons.Worklist.controller.Worklist", {
@@ -16,65 +24,88 @@ sap.ui.define(
 
       onInit: function () {
         const oViewModel = new JSONModel({
-          sCount: '0'
+          sCount: "0",
         });
         this.setModel(oViewModel, "worklistView");
       },
 
-      onBeforeRendering: function() {
+      onBeforeRendering: function () {
         this._bindTable();
       },
 
       _bindTable() {
-        const oTable = this.getView().byId('table');
+        const oTable = this.getView().byId("table");
         oTable.bindItems({
-          path: '/zjblessons_base_Headers',
-          sorter: [new Sorter('DocumentDate', true)],
+          path: "/zjblessons_base_Headers",
+          sorter: [new Sorter("DocumentDate", true)],
           template: this._getTableTemplate(),
           urlParameters: {
-              $select: 'HeaderID,DocumentNumber,DocumentDate,PlantText,RegionText,Description,Created'
+            $select:
+              "HeaderID,DocumentNumber,DocumentDate,PlantText,RegionText,Description,Created",
           },
           events: {
             dataRequested: (oData) => {
               this._getTableCounter();
-            }
-          }
-        })
+            },
+          },
+        });
       },
 
       _getTableCounter() {
-        this.getModel().read('/zjblessons_base_Headers/$count', {
+        this.getModel().read("/zjblessons_base_Headers/$count", {
           success: (sCount) => {
-            this.getModel('worklistView').setProperty('/sCount', sCount)
-          }
-        })
+            this.getModel("worklistView").setProperty("/sCount", sCount);
+          },
+        });
       },
 
       _getTableTemplate() {
         const oTemplate = new sap.m.ColumnListItem({
-          type: 'Navigation',
+          type: "Navigation",
           cells: [
             new sap.m.Text({
-              text: '{DocumentNumber}'
+              text: "{DocumentNumber}",
             }),
             new sap.m.Text({
-              text: '{DocumentDate}'
+              text: {
+                path: "DocumentDate",
+                type: "sap.ui.model.type.Date",
+                formatOptions: { style: "short" },
+              },
             }),
             new sap.m.Text({
-              text: '{PlantText}'
+              text: "{PlantText}",
             }),
             new sap.m.Text({
-              text: '{RegionText}'
+              text: "{RegionText}",
             }),
             new sap.m.Text({
-              text: '{Description}'
+              text: "{Description}",
             }),
             new sap.m.Text({
-              text: '{Created}'
+              text: {
+                path: "Created",
+                type: "sap.ui.model.type.Date",
+                formatOptions: { style: "short" },
+              },
             }),
-          ]
-        })
+            new sap.m.Button({
+              type: 'Transparent',
+              icon: this.getResourceBundle().getText('iDecline'),
+              press: this._onPressDelete.bind(this)
+            })
+          ],
+        });
         return oTemplate;
+      },
+
+
+      _onPressDelete(oEvent) {
+        const oBindingContext = oEvent.getSource().getBindingContext(),
+          sKey = this.getModel().createKey('/zjblessons_base_Headers', {
+            HeaderID: oBindingContext.getProperty('HeaderID')
+          });
+        this.getModel().remove(sKey);
       },
 
       onSearch(oEvent) {
@@ -99,24 +130,18 @@ sap.ui.define(
         oTable.getBinding("items").filter(oFilter);
       },
 
-
       onPressCreate() {
         this._loadCreateDialog();
       },
 
-      handleChange(oEvent) {
-        const oDP = oEvent.getSource();
-        const sValue = oEvent.getParameter("value");
-      },
-
       _loadCreateDialog: async function () {
         this._oDialog = await Fragment.load({
-          name: 'zjblessons.Worklist.view.fragment.CreateDialog',
+          name: "zjblessons.Worklist.view.fragment.CreateDialog",
           controller: this,
-          id: this.getView().getId()
-        }).then(oDialog => {
+          id: this.getView().getId(),
+        }).then((oDialog) => {
           this.getView().addDependent(oDialog);
-          return oDialog
+          return oDialog;
         });
         this._oDialog.open();
       },
@@ -124,13 +149,14 @@ sap.ui.define(
       onDialogBeforeOpen(oEvent) {
         const oDialog = oEvent.getSource();
         const oParams = {
-          Version: 'A',
-          HeaderID: '0',
+          Version: "A",
+          HeaderID: "0",
           Created: new Date(),
-          IntegrationID: null
-
+          IntegrationID: null,
         };
-        const oEntry = this.getModel().createEntry('/zjblessons_base_Headers', { properties: oParams });
+        const oEntry = this.getModel().createEntry("/zjblessons_base_Headers", {
+          properties: oParams,
+        });
         oDialog.setBindingContext(oEntry);
       },
       onPressCancel() {
@@ -141,7 +167,7 @@ sap.ui.define(
         this.getModel().submitChanges({
           success: () => {
             this._bindTable();
-          }
+          },
         });
         this._oDialog.destroy();
       },

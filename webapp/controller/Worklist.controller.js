@@ -121,25 +121,25 @@ sap.ui.define(
         this._bindTable();
       },
 
-
       onSearch(oEvent) {
         const sValue = oEvent.getParameter("value");
-        this._searchHandler(sValue);
+        let sValueType;
+        oEvent.getSource().sId.includes('Plant') ? sValueType = "Plant" : sValueType = "Search";
+        this._searchHandler(sValue, sValueType);
+        debugger;
       },
       onLiveSearch(oEvent) {
         const sValue = oEvent.getParameter("newValue");
-        this._searchHandler(sValue);
+        let sValueType;
+        oEvent.getSource().sId.includes('Plant') ? sValueType = "Plant" : sValueType = "Search";
+        this._searchHandler(sValue, sValueType);
       },
 
-      _searchHandler(sValue) {
+      _searchHandler(sValue, sValueType) {
         const oTable = this.getView().byId("table"),
           oFilter = !!sValue.length
-            ? new Filter({
-                filters: [
-                  new Filter("DocumentNumber", FilterOperator.Contains, sValue),
-                  new Filter("PlantText", FilterOperator.EQ, sValue),
-                ],
-              })
+            ? sValueType==="Search"?new Filter('DocumentNumber', FilterOperator.Contains, sValue):
+            new Filter('PlantText', FilterOperator.EQ, sValue)
             : [];
         oTable.getBinding("items").filter(oFilter);
       },

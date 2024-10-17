@@ -27,6 +27,7 @@ sap.ui.define(
       onInit: function () {
         const oViewModel = new JSONModel({
           sCount: "0",
+          sITBKey: "All"
         });
         this.setModel(oViewModel, "worklistView");
       },
@@ -41,6 +42,7 @@ sap.ui.define(
           path: "/zjblessons_base_Headers",
           sorter: [new Sorter("DocumentDate", true)],
           template: this._getTableTemplate(),
+          filters: this._getTableFilters(),
           urlParameters: {
             $select:
               "HeaderID,DocumentNumber,DocumentDate,PlantText,RegionText,Description,Created",
@@ -101,6 +103,11 @@ sap.ui.define(
         return oTemplate;
       },
 
+      _getTableFilters() {
+        const oWorklistModel = this.getModel('worklistView'),
+          sSelectedKey = oWorklistModel.getProperty('/sITBKey');
+        return sSelectedKey === 'All' ? [] : [new Filter('Version', FilterOperator.EQ, 'D')];
+      },
 
       _onPressDelete(oEvent) {
         const oBindingContext = oEvent.getSource().getBindingContext(),
@@ -197,6 +204,12 @@ sap.ui.define(
         });
         this._oDialog.destroy();
       },
+
+      onIconTabHeaderSelect(oEvent) {
+        const oSelectedKey = oEvent.getParameter('key');
+        this.getModel('worklistView').setProperty('/sITBKey', oSelectedKey);
+        this._bindTable();
+      }
     });
   }
 );

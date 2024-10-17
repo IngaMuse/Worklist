@@ -3,8 +3,20 @@
 	xmlns:mvc="sap.ui.core.mvc">
 
 	<Page 
-	showHeader="false"
 	>
+
+	<customHeader>
+		<Toolbar>
+				<content>
+						<IconTabHeader selectedKey="{= ${worklistView>/sITBKey}}" select="onIconTabHeaderSelect">
+								<items>
+										<IconTabFilter key="All" text = '{i18n>sAll}'/>
+										<IconTabFilter key="Deactivated" text = '{i18n>sDeactivated}'/>
+								</items>
+						</IconTabHeader>
+				</content>
+		</Toolbar>
+	</customHeader>
 		<Table 
 				id='table' 
 				width="auto" 

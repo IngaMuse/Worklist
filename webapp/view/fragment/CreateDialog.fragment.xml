@@ -6,7 +6,7 @@
   <content>
     <VBox>
         <VBox>
-        <Label text="DocumentDate" labelFor="idDocumentDate"/>
+        <Label text="{i18n>DocumentDateLabel}" labelFor="idDocumentDate"/>
 				<DatePicker
 					id='idDocumentDate'
 					value="{
@@ -20,7 +20,7 @@
 					class="sapUiSmallMarginBottom"/>
         </VBox>
         <VBox>
-            <Label text="DocumentNumber"
+            <Label text="{i18n>DocumentNumberLabel}"
                 labelFor="idDocumentNumberInput"
             />
             <Input
@@ -29,7 +29,7 @@
             />
         </VBox>
         <VBox>
-            <Label text="PlantText"
+            <Label text="{i18n>PlantTextLabel}"
                 labelFor="idPlantTextInput"
             />
             <Input
@@ -38,7 +38,7 @@
             />
         </VBox>
         <VBox>
-            <Label text="RegionText"
+            <Label text="{i18n>RegionTextLabel}"
                 labelFor="idRegionTextInput"
             />
             <Input
@@ -47,7 +47,7 @@
             />
         </VBox>
         <VBox>
-            <Label text="Description"
+            <Label text="{i18n>DescriptionLabel}"
                 labelFor="idDescriptionTextArea"
             />
             <TextArea

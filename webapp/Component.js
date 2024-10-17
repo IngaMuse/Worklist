@@ -1,10 +1,10 @@
 /* global document */
 sap.ui.define([
 		"sap/ui/core/UIComponent",
-		"sap/ui/Device",
-		"zjblessons/Worklist/model/models",
+	"sap/ui/Device",
+		"sap/ui/model/json/JSONModel",
 		"zjblessons/Worklist/controller/ErrorHandler"
-	], function (UIComponent, Device, models, ErrorHandler) {
+	], function (UIComponent, Device, JSONModel, ErrorHandler) {
 		"use strict";
 
 		return UIComponent.extend("zjblessons.Worklist.Component", {
@@ -16,13 +16,18 @@ sap.ui.define([
 			init : function () {
 				UIComponent.prototype.init.apply(this, arguments);
 				this._oErrorHandler = new ErrorHandler(this);
-				this.setModel(models.createDeviceModel(), "device");
+				this.setModel(this.createDeviceModel(), "device");
 				this.getRouter().initialize();
 			},
 
 			destroy : function () {
 				this._oErrorHandler.destroy();
 				UIComponent.prototype.destroy.apply(this, arguments);
+			},
+
+			createDeviceModel : function () {
+				const oModel = new JSONModel(Device);
+				return oModel;
 			},
 
 			getContentDensityClass : function() {

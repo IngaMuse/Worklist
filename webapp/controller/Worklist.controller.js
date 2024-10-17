@@ -107,8 +107,8 @@ sap.ui.define(
         sKey = this.getModel().createKey('/zjblessons_base_Headers', {
           HeaderID: oBindingContext.getProperty('HeaderID')
         });
-        sap.m.MessageBox.confirm("Do you really want to delete this entry?", {
-          title: "Delete confirmation",
+        sap.m.MessageBox.confirm(this.getResourceBundle().getText('sMessageConfirmation'), {
+          title: this.getResourceBundle().getText('sTitleConfirmation'),
           actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
           onClose: function (oAction) { if(oAction === sap.m.MessageBox.Action.YES)
             this.getModel().remove(sKey)
@@ -117,7 +117,7 @@ sap.ui.define(
       },
 
       onPressRefresh() {
-        MessageToast.show('Refresh');
+        MessageToast.show(this.getResourceBundle().getText('sRefresh'));
         this._bindTable();
       },
 
@@ -142,6 +142,18 @@ sap.ui.define(
             new Filter('PlantText', FilterOperator.EQ, sValue)
             : [];
         oTable.getBinding("items").filter(oFilter);
+      },
+
+      onSearchDate(oEvent) {
+        const sFrom = oEvent.getParameter("from"),
+          sTo = oEvent.getParameter("to"),
+          oTable = this.getView().byId("table");
+        if ((sFrom && sTo)) {
+          const oFilters = [new Filter("DocumentDate", sap.ui.model.FilterOperator.BT, sFrom, sTo)];
+          oTable.getBinding("items").filter(oFilters);
+        } else {
+          oTable.getBinding("items").filter([]);
+        }
       },
 
       onPressCreate() {

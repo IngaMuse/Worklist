@@ -14,14 +14,9 @@
 				"uri": "/jetCloud/apps/zjblessons/jblesson02/v01/01.xsodata/",
 				"type": "OData",
 				"settings": {
-					"odataVersion": "2.0",
-					"localUri": "localService/metadata.xml"
+					"odataVersion": "2.0"
 				}
 			}
-		},
-		"sourceTemplate": {
-			"id": "sap.ui.ui5-template-plugin.1worklist",
-			"version": "1.52.7"
 		}
 	},
 	"sap.ui": {
@@ -70,7 +65,7 @@
 				"dataSource": "mainService",
 				"preload": true,
 				"settings": {
-					"defaultCountMode": false,
+					"defaultCountMode": "None",
 					"defaultBindingMode": "TwoWay"
 				}
 			}

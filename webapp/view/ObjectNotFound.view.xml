@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="zjblessons.Worklist.controller.NotFound"
+	controllerName="zjblessons.Worklist.controller.Object"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m">
 

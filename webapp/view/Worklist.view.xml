@@ -27,14 +27,22 @@
 					showSearchButton = 'false'
 					change='onSearch' liveChange='onLiveSearch' width="auto">
 					</SearchField>
+
+					<DateRangeSelection 
+					id = 'searchFieldDocumentDate'
+					tooltip="{i18n>worklistSearchTooltipDocumentDate}" 
+					change='onSearchDate' width="15em"
+					placeholder="{i18n>worklistSearchPlaceholderDocumentDate}">
+					</DateRangeSelection>
+
 					<ToolbarSpacer />
 					<Button
-							icon="sap-icon://add"
+							icon="{i18n>iAdd}" 
 							type="Emphasized"
 							press='onPressCreate'
 					/>
 					<Button
-							icon="sap-icon://refresh"
+							icon="{i18n>iRefresh}"
 							type="Transparent"
 							press='onPressRefresh'
 					/>

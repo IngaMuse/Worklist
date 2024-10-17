@@ -5,7 +5,7 @@
 	xmlns:semantic="sap.f.semantic">
 
 	<semantic:SemanticPage
-		id="page"
+		id='page'
 		headerPinnable="false"
 		toggleHeaderOnTitleClick="false"
 		busy="{objectView>/busy}"
@@ -21,7 +21,7 @@
 		</semantic:headerContent>
 
 		<semantic:sendEmailAction>
-			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
+			<semantic:SendEmailAction id='shareEmail' press='onShareEmailPress'/>
 		</semantic:sendEmailAction>
 
 

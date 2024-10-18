@@ -1,30 +1,38 @@
 <mvc:View
 	controllerName="zjblessons.Worklist.controller.Object"
 	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic">
+	xmlns:mvc="sap.ui.core.mvc">
 
-	<semantic:SemanticPage
-		id="page"
-		headerPinnable="false"
-		toggleHeaderOnTitleClick="false"
-		busy="{objectView>/busy}"
-		busyIndicatorDelay="{objectView>/delay}">
-
-		<semantic:titleHeading>
-			<Title text="{DocumentNumber}" />
-		</semantic:titleHeading>
-
-		<semantic:headerContent>
-			<ObjectNumber
-			/>
-		</semantic:headerContent>
-
-		<semantic:sendEmailAction>
-			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
-		</semantic:sendEmailAction>
-
-
-	</semantic:SemanticPage>
-
+<Page
+		showFooter="false"
+>
+		<customHeader>
+			<Bar>
+					<contentLeft>
+					<Button type="Transparent" icon="{i18n>iNavBackIcon}" press ='onNavBack'/>
+							<Title
+								text="{DocumentNumber}"
+							/>
+					</contentLeft>
+					<contentRight>
+						<Button type="Emphasized" press='onPressEdit' text="{i18n>sEdit}" icon="{i18n>iEditIcon}" visible="{= !${objectView>/bEditMode}}"/>
+						<Button type="Emphasized" press='onPressSave' text="{i18n>sSave}" icon="{i18n>iSaveIcon}" visible="{= ${objectView>/bEditMode}}"/>
+						<Button type="Transparent" press='onPressCancel' text="{i18n>sCancel}" icon="{i18n>iResetIcon}" visible="{= ${objectView>/bEditMode}}"/>
+						<Button type="Reject" press='onPressDelete' icon="{i18n>iDeleteIcon}" visible="{= !${objectView>/bEditMode}}"/>
+					</contentRight>
+			</Bar>
+		</customHeader>
+		<content>
+			<IconTabBar expandable="false" headerMode="Inline" selectedKey="{= ${objectView>/sSelectedTab}}">
+					<items>
+					<IconTabFilter icon="{i18n>iListIcon}" key="List" text="{i18n>sList}">
+		
+					</IconTabFilter>
+					<IconTabFilter icon="{i18n>iFormIcon}" key="Form" text="{i18n>sForm}">
+		
+					</IconTabFilter>
+					</items>
+			</IconTabBar>
+		</content>
+</Page>
 </mvc:View>

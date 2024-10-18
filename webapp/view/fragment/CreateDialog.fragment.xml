@@ -1,0 +1,80 @@
+<c:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:c="sap.ui.core"
+>
+  <Dialog class='sapUiContentPadding' beforeOpen="onDialogBeforeOpen" title="Create header">
+  <content>
+    <VBox>
+        <VBox>
+        <Label text="{i18n>DocumentDateLabel}" labelFor="idDocumentDate"/>
+				<DatePicker
+					id='idDocumentDate'
+					value="{
+						'path':'DocumentDate',
+						'type':'sap.ui.model.type.Date',
+						'formatOptions': {
+							'pattern': 'yyyy-MM-dd'
+						}
+					}"
+					change='handleChange'
+					class="sapUiSmallMarginBottom"/>
+        </VBox>
+        <VBox>
+            <Label text="{i18n>DocumentNumberLabel}"
+                labelFor="idDocumentNumberInput"
+            />
+            <Input
+              value="{DocumentNumber}"
+              id="idDocumentNumberInput"
+            />
+        </VBox>
+        <VBox>
+            <Label text="{i18n>PlantTextLabel}"
+                labelFor="idPlantTextInput"
+            />
+            <Input
+              value="{PlantText}"
+              id="idPlantTextInput"
+            />
+        </VBox>
+        <VBox>
+            <Label text="{i18n>RegionTextLabel}"
+                labelFor="idRegionTextInput"
+            />
+            <Input
+              value="{RegionText}"
+              id="idRegionTextInput"
+            />
+        </VBox>
+        <VBox>
+            <Label text="{i18n>DescriptionLabel}"
+                labelFor="idDescriptionTextArea"
+            />
+            <TextArea
+                maxLength="256"
+                rows="3"
+                width="100%"
+                value="{Description}"
+                id="idDescriptionTextArea"
+            />
+        </VBox>
+    </VBox>
+  </content>
+    
+    <beginButton>
+    <Button
+        text="Save"
+        type="Emphasized"
+        press='onPressSave'
+    />
+    </beginButton>
+
+    <endButton>
+    <Button
+        text="Cancel"
+        type="Transparent"
+        press='onPressCancel'
+    />
+    </endButton>
+  </Dialog>
+</c:FragmentDefinition>

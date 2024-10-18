@@ -4,7 +4,7 @@
 	displayBlock="true"
 	xmlns="sap.m">
 
-	<App id="app"
+	<App id='app'
 		 busy="{appView>/busy}"
 		 busyIndicatorDelay="{appView>/delay}"/>
 

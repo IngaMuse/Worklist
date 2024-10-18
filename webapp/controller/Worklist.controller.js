@@ -225,7 +225,16 @@ sap.ui.define(
         const oSelectedKey = oEvent.getParameter('key');
         this.getModel('worklistView').setProperty('/sITBKey', oSelectedKey);
         this._bindTable();
+      },
+
+      onItemSelect(oEvent) {
+        const oSelectedItem = oEvent.getParameter('listItem'),
+          sHeaderID = oSelectedItem.getBindingContext().getProperty('HeaderID');
+        this.getRouter().navTo('object', {
+          objectId: sHeaderID
+        })
       }
+
     });
   }
 );

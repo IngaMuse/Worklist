@@ -21,7 +21,8 @@ sap.ui.define([
 						busy : true,
 						delay: 0,
 						sSelectedTab: 'List',
-						bEditMode: false
+						bEditMode: false,
+						sVersion: ''
 					});
 
 				this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
@@ -29,8 +30,11 @@ sap.ui.define([
 			},
 
 			onNavBack : function() {
-				var sPreviousHash = History.getInstance().getPreviousHash();
+				_navBack()
+			},
 
+			_navBack() {
+				const sPreviousHash = History.getInstance().getPreviousHash();
 				if (sPreviousHash !== undefined) {
 					history.go(-1);
 				} else {
@@ -39,9 +43,9 @@ sap.ui.define([
 			},
 
 			_onObjectMatched : function (oEvent) {
-				var sObjectId =  oEvent.getParameter("arguments").objectId;
+				const sObjectId = oEvent.getParameter("arguments").objectId;
 				this.getModel().metadataLoaded().then( function() {
-					var sObjectPath = this.getModel().createKey("zjblessons_base_Headers", {
+					const sObjectPath = this.getModel().createKey("zjblessons_base_Headers", {
 						HeaderID :  sObjectId
 					});
 					this._bindView("/" + sObjectPath);
@@ -99,12 +103,28 @@ sap.ui.define([
 				oModel.setProperty('/bEditMode', bValue);
 			},
 
-			onPressDelete(){
-				this._setEditModel(false);
+			onPressDelete() {
+				const oView = this.getView(),
+				sPath = oView.getBindingContext().getPath();
+          sap.m.MessageBox.confirm(this.getResourceBundle().getText('sMessageConfirmation'), {
+            title: this.getResourceBundle().getText('sTitleConfirmation'),
+						actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+						styleClass: 'sapUiSizeCozy',
+            onClose: function (oAction) {
+							if (oAction === sap.m.MessageBox.Action.YES)
+								oView.setBusy(true);
+							this.getModel().remove(sPath, {
+								success: function () {
+									oView.setBusy(false);
+									this._navBack();
+								}.bind(this),
+								error: function () {
+									
+								}.bind(this)
+								})
+            }.bind(this)
+          });
 			},
-
-
 		});
-
 	}
 );

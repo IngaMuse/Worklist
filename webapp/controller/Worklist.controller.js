@@ -9,6 +9,7 @@ sap.ui.define(
     "sap/ui/core/Fragment",
     "sap/m/MessageToast",
 	"sap/m/Switch",
+	"sap/m/SwitchType",
   ],
   function (
     BaseController,
@@ -19,7 +20,8 @@ sap.ui.define(
 	FilterOperator,
 	Fragment,
 	MessageToast,
-	Switch
+	Switch,
+	SwitchType
   ) {
     "use strict";
 
@@ -67,6 +69,7 @@ sap.ui.define(
 
       _getTableTemplate() {
         const oTemplate = new sap.m.ColumnListItem({
+          highlight: "{= ${Version} === 'A' ? 'Success' : 'Error'}",
           type: "Navigation",
           cells: [
             new sap.m.Text({
@@ -96,7 +99,6 @@ sap.ui.define(
               },
             }),
             new sap.m.Switch({
-              switchType: 'AcceptReject',
               state: "{= ${Version} === 'D'}",
               change: this._changeVersion.bind(this)
             }),

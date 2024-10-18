@@ -8,18 +8,18 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/core/Fragment",
     "sap/m/MessageToast",
-	"sap/m/Switch",
-	"sap/m/SwitchType",
+    "sap/m/Switch",
+    "sap/m/SwitchType",
   ],
   function (
     BaseController,
-	JSONModel,
-	formatter,
-	Sorter,
-	Filter,
-	FilterOperator,
-	Fragment,
-	MessageToast,
+    JSONModel,
+    formatter,
+    Sorter,
+    Filter,
+    FilterOperator,
+    Fragment,
+    MessageToast,
   ) {
     "use strict";
 
@@ -112,7 +112,7 @@ sap.ui.define(
 
       _changeVersion(oEvent) {
         const sVersion = oEvent.getParameter('state') ? 'D' : 'A',
-        sPath = oEvent.getSource().getBindingContext().getPath();
+          sPath = oEvent.getSource().getBindingContext().getPath();
         this.getModel().setProperty(`${sPath}/Version`, sVersion);
         this.getModel().submitChanges();
       },
@@ -125,16 +125,21 @@ sap.ui.define(
 
       _onPressDelete(oEvent) {
         const oBindingContext = oEvent.getSource().getBindingContext(),
-        sKey = this.getModel().createKey('/zjblessons_base_Headers', {
-          HeaderID: oBindingContext.getProperty('HeaderID')
-        });
-        sap.m.MessageBox.confirm(this.getResourceBundle().getText('sMessageConfirmation'), {
-          title: this.getResourceBundle().getText('sTitleConfirmation'),
-          actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
-          onClose: function (oAction) { if(oAction === sap.m.MessageBox.Action.YES)
-            this.getModel().remove(sKey)
-          }.bind(this)
-      });
+          sKey = this.getModel().createKey('/zjblessons_base_Headers', {
+            HeaderID: oBindingContext.getProperty('HeaderID')
+          });
+        if (oBindingContext.getProperty('Version') === 'D') {
+          sap.m.MessageBox.confirm(this.getResourceBundle().getText('sMessageConfirmation'), {
+            title: this.getResourceBundle().getText('sTitleConfirmation'),
+            actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+            onClose: function (oAction) {
+              if (oAction === sap.m.MessageBox.Action.YES)
+                this.getModel().remove(sKey)
+            }.bind(this)
+          });
+        } else {
+          MessageToast.show(this.getResourceBundle().getText('sDeleteVersionD'), { at: "center center" });
+        }
       },
 
       onPressRefresh() {

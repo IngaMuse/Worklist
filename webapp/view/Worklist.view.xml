@@ -10,7 +10,7 @@
 				<content>
 						<IconTabHeader selectedKey="{= ${worklistView>/sITBKey}}" select="onIconTabHeaderSelect">
 								<items>
-										<IconTabFilter key="All" text = '{i18n>sAll}'/>
+										<IconTabFilter id = '12345' key="All" text = '{i18n>sAll}'/>
 										<IconTabFilter key="Deactivated" text = '{i18n>sDeactivated}'/>
 								</items>
 						</IconTabHeader>
@@ -78,6 +78,9 @@
 				</Column>
 				<Column>
 					<Text text="{i18n>tableNameColumnTitleCreated}"/>
+				</Column>
+					<Column width="5%">
+					<Text text=""/>
 				</Column>
 					<Column width="5%">
 					<Text text=""/>

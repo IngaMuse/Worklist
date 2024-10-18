@@ -8,16 +8,18 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/core/Fragment",
     "sap/m/MessageToast",
+	"sap/m/Switch",
   ],
   function (
     BaseController,
-    JSONModel,
-    formatter,
-    Sorter,
-    Filter,
-    FilterOperator,
-    Fragment,
-    MessageToast
+	JSONModel,
+	formatter,
+	Sorter,
+	Filter,
+	FilterOperator,
+	Fragment,
+	MessageToast,
+	Switch
   ) {
     "use strict";
 
@@ -93,6 +95,11 @@ sap.ui.define(
                 formatOptions: { style: "short" },
               },
             }),
+            new sap.m.Switch({
+              switchType: 'AcceptReject',
+              state: "{= ${Version} === 'D'}",
+              change: this._changeVersion.bind(this)
+            }),
             new sap.m.Button({
               type: 'Transparent',
               icon: this.getResourceBundle().getText('iDecline'),
@@ -101,6 +108,13 @@ sap.ui.define(
           ],
         });
         return oTemplate;
+      },
+
+      _changeVersion(oEvent) {
+        const sVersion = oEvent.getParameter('state') ? 'D' : 'A',
+        sPath = oEvent.getSource().getBindingContext().getPath();
+        this.getModel().setProperty(`${sPath}/Version`, sVersion);
+        this.getModel().submitChanges();
       },
 
       _getTableFilters() {

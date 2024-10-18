@@ -114,6 +114,7 @@ sap.ui.define(
         const sVersion = oEvent.getParameter('state') ? 'D' : 'A',
           sPath = oEvent.getSource().getBindingContext().getPath();
         this.getModel().setProperty(`${sPath}/Version`, sVersion);
+        this.getModel().setRefreshAfterChange(false);
         this.getModel().submitChanges();
       },
       

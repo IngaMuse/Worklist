@@ -17,20 +17,15 @@ sap.ui.define([
 			formatter: formatter,
 
 			onInit : function () {
-				var iOriginalBusyDelay,
-					oViewModel = new JSONModel({
+					const oViewModel = new JSONModel({
 						busy : true,
 						delay: 0,
-						sSelectedTab: 'List'
+						sSelectedTab: 'List',
+						bEditMode: false
 					});
 
 				this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
-				iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
 				this.setModel(oViewModel, "objectView");
-				this.getOwnerComponent().getModel().metadataLoaded().then(function () {
-						oViewModel.setProperty("/delay", iOriginalBusyDelay);
-					}
-				);
 			},
 
 			onNavBack : function() {
@@ -77,29 +72,37 @@ sap.ui.define([
 				var oView = this.getView(),
 					oViewModel = this.getModel("objectView"),
 					oElementBinding = oView.getElementBinding();
-
-				// No data for the binding
 				if (!oElementBinding.getBoundContext()) {
 					this.getRouter().getTargets().display("objectNotFound");
 					return;
 				}
-
-				var oResourceBundle = this.getResourceBundle(),
-					oObject = oView.getBindingContext().getObject(),
-					sObjectId = oObject.HeaderID,
-					sObjectName = oObject.DocumentNumber;
-
-				oViewModel.setProperty("/busy", false);
-
-				oViewModel.setProperty("/shareSendEmailSubject",
-				oResourceBundle.getText("shareSendEmailObjectSubject", [sObjectId]));
-				oViewModel.setProperty("/shareSendEmailMessage",
-				oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));
 			},
 
 			onLinkPressed : function () {
 				this.getRouter().navTo("worklist");
-			}
+			},
+
+			onPressEdit(){
+				this._setEditModel(true);
+			},
+
+			onPressSave(){
+				this._setEditModel(false);
+			},
+
+			onPressCancel(){
+				this._setEditModel(false);
+			},
+
+			_setEditModel(bValue) {
+				const oModel = this.getModel("objectView");
+				oModel.setProperty('/bEditMode', bValue);
+			},
+
+			onPressDelete(){
+				this._setEditModel(false);
+			},
+
 
 		});
 

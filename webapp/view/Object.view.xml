@@ -5,15 +5,30 @@
 
 <Page
 		showFooter="false"
-		title="{DocumentNumber}"
 >
+		<customHeader>
+			<Bar>
+					<contentLeft>
+					<Button type="Transparent" icon="{i18n>iNavBackIcon}" press ='onNavBack'/>
+							<Title
+								text="{DocumentNumber}"
+							/>
+					</contentLeft>
+					<contentRight>
+						<Button type="Emphasized" press='onPressEdit' text="{i18n>sEdit}" icon="{i18n>iEditIcon}" visible="{= !${objectView>/bEditMode}}"/>
+						<Button type="Emphasized" press='onPressSave' text="{i18n>sSave}" icon="{i18n>iSaveIcon}" visible="{= ${objectView>/bEditMode}}"/>
+						<Button type="Transparent" press='onPressCancel' text="{i18n>sCancel}" icon="{i18n>iResetIcon}" visible="{= ${objectView>/bEditMode}}"/>
+						<Button type="Reject" press='onPressDelete' icon="{i18n>iDeleteIcon}" visible="{= !${objectView>/bEditMode}}"/>
+					</contentRight>
+			</Bar>
+		</customHeader>
 		<content>
 			<IconTabBar expandable="false" headerMode="Inline" selectedKey="{= ${objectView>/sSelectedTab}}">
 					<items>
-					<IconTabFilter icon="{i18n>iListIcon}" key="List" text="{i18n>List}">
+					<IconTabFilter icon="{i18n>iListIcon}" key="List" text="{i18n>sList}">
 		
 					</IconTabFilter>
-					<IconTabFilter icon="{i18n>iFormIcon}" key="Form" text="{i18n>Form}">
+					<IconTabFilter icon="{i18n>iFormIcon}" key="Form" text="{i18n>sForm}">
 		
 					</IconTabFilter>
 					</items>

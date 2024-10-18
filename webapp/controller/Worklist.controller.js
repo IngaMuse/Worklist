@@ -20,8 +20,6 @@ sap.ui.define(
 	FilterOperator,
 	Fragment,
 	MessageToast,
-	Switch,
-	SwitchType
   ) {
     "use strict";
 
@@ -49,7 +47,7 @@ sap.ui.define(
           filters: this._getTableFilters(),
           urlParameters: {
             $select:
-              "HeaderID,DocumentNumber,DocumentDate,PlantText,RegionText,Description,Created",
+              "HeaderID,DocumentNumber,DocumentDate,PlantText,RegionText,Description,Created,Version",
           },
           events: {
             dataRequested: (oData) => {
@@ -118,7 +116,7 @@ sap.ui.define(
         this.getModel().setProperty(`${sPath}/Version`, sVersion);
         this.getModel().submitChanges();
       },
-
+      
       _getTableFilters() {
         const oWorklistModel = this.getModel('worklistView'),
           sSelectedKey = oWorklistModel.getProperty('/sITBKey');

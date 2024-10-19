@@ -1,7 +1,8 @@
 <mvc:View
 	controllerName="zjblessons.Worklist.controller.Object"
 	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc">
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core">
 
 <Page
 		showFooter="false"
@@ -32,6 +33,28 @@
 									<VBox class="supUiContentPadding">
 												<Label text="{i18n>DocumentNumberLabel}" labelFor="DocumentNumberID"/>
 												<Input id ='DocumentNumberID' editable="{= ${objectView>/bEditMode}}" value="{DocumentNumber}"/>
+									</VBox>
+								  </CustomListItem>								
+									<CustomListItem>
+									<VBox class="supUiContentPadding">
+												<Label text="{i18n>RegionTextLabel}" labelFor="RegionID"/>
+												<Select
+												selectedKey="{RegionText}"
+												editable="{= ${objectView>/bEditMode}}" 
+												items="{
+													path: '/zjblessons_base_Regions'
+													}"
+												>
+														<items>
+																<core:Item  key='{RegionID}' text="{RegionText}"/>
+														</items>
+												</Select>
+									</VBox>
+								</CustomListItem>
+									<CustomListItem>
+									<VBox>
+												<Label text="{i18n>DescriptionLabel}" labelFor="DescriptionID"/>
+												<TextArea id ='DescriptionID' rows='3' editable="{= ${objectView>/bEditMode}}" value="{Description}"/>
 									</VBox>
 								</CustomListItem>
 							</List>

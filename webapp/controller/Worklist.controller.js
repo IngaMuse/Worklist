@@ -116,6 +116,7 @@ sap.ui.define(
         this.getView().getModel().setProperty(`${sPath}/Version`, sVersion);
         this.getView().getModel().setRefreshAfterChange(false);
         this.getView().getModel().submitChanges();
+        this.getView().getModel().setRefreshAfterChange(true);
       },
       
       _getTableFilters() {

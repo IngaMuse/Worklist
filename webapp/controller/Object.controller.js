@@ -93,7 +93,7 @@ sap.ui.define([
 
 			onPressSave() {
 				const oModel = this.getModel(),
-					oView = this.getView();
+					oView = this.getView(),
 					oPendingChanges = oModel.getPendingChanges(),
 					sPath = oView.getBindingContext().getPath().slice(1);
 				if (oPendingChanges.hasOwnProperty(sPath)) {
@@ -112,6 +112,7 @@ sap.ui.define([
 
 			onPressCancel(){
 				this._setEditModel(false);
+				this.getModel().resetChanges();
 			},
 
 			_setEditModel(bValue) {
@@ -127,9 +128,9 @@ sap.ui.define([
 						actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
 						styleClass: 'sapUiSizeCozy',
             onClose: function (oAction) {
-							if (oAction === sap.m.MessageBox.Action.YES)
+							if (oAction === sap.m.MessageBox.Action.YES) {
 								oView.setBusy(true);
-							this.getModel().remove(sPath, {
+								this.getModel().remove(sPath, {
 								success: function () {
 									oView.setBusy(false);
 									this._navBack();
@@ -137,7 +138,9 @@ sap.ui.define([
 								error: function () {
 									
 								}.bind(this)
-								})
+								}
+								)
+							}
             }.bind(this)
           });
 			},

@@ -30,7 +30,7 @@ sap.ui.define([
 			},
 
 			onNavBack : function() {
-				_navBack()
+				this._navBack();
 			},
 
 			_navBack() {
@@ -42,12 +42,13 @@ sap.ui.define([
 				}
 			},
 
-			_onObjectMatched : function (oEvent) {
+			_onObjectMatched: function (oEvent) {
 				const sObjectId = oEvent.getParameter("arguments").objectId;
 				this.getModel().metadataLoaded().then( function() {
 					const sObjectPath = this.getModel().createKey("zjblessons_base_Headers", {
 						HeaderID :  sObjectId
 					});
+
 					this._bindView("/" + sObjectPath);
 				}.bind(this));
 			},
@@ -90,7 +91,22 @@ sap.ui.define([
 				this._setEditModel(true);
 			},
 
-			onPressSave(){
+			onPressSave() {
+				const oModel = this.getModel(),
+					oView = this.getView();
+					oPendingChanges = oModel.getPendingChanges(),
+					sPath = oView.getBindingContext().getPath().slice(1);
+				if (oPendingChanges.hasOwnProperty(sPath)) {
+					oView.setBusy(true);
+					oModel.submitChanges({
+						success: () => {
+							oView.setBusy(false);
+						},
+						error: () => {
+							oView.setBusy(false);
+						}
+					});
+			}
 				this._setEditModel(false);
 			},
 
@@ -105,7 +121,7 @@ sap.ui.define([
 
 			onPressDelete() {
 				const oView = this.getView(),
-				sPath = oView.getBindingContext().getPath();
+					sPath = oView.getBindingContext().getPath();
           sap.m.MessageBox.confirm(this.getResourceBundle().getText('sMessageConfirmation'), {
             title: this.getResourceBundle().getText('sTitleConfirmation'),
 						actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],

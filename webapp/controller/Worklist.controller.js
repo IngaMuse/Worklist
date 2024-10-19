@@ -58,7 +58,7 @@ sap.ui.define(
       },
 
       _getTableCounter() {
-        this.getModel().read("/zjblessons_base_Headers/$count", {
+        this.getView().getModel().read("/zjblessons_base_Headers/$count", {
           success: (sCount) => {
             this.getModel("worklistView").setProperty("/sCount", sCount);
           },
@@ -113,9 +113,9 @@ sap.ui.define(
       _changeVersion(oEvent) {
         const sVersion = oEvent.getParameter('state') ? 'D' : 'A',
           sPath = oEvent.getSource().getBindingContext().getPath();
-        this.getModel().setProperty(`${sPath}/Version`, sVersion);
-        this.getModel().setRefreshAfterChange(false);
-        this.getModel().submitChanges();
+        this.getView().getModel().setProperty(`${sPath}/Version`, sVersion);
+        this.getView().getModel().setRefreshAfterChange(false);
+        this.getView().getModel().submitChanges();
       },
       
       _getTableFilters() {
@@ -126,7 +126,7 @@ sap.ui.define(
 
       _onPressDelete(oEvent) {
         const oBindingContext = oEvent.getSource().getBindingContext(),
-          sKey = this.getModel().createKey('/zjblessons_base_Headers', {
+          sKey = this.getView().getModel().createKey('/zjblessons_base_Headers', {
             HeaderID: oBindingContext.getProperty('HeaderID')
           });
         if (oBindingContext.getProperty('Version') === 'D') {
@@ -135,7 +135,7 @@ sap.ui.define(
             actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
             onClose: function (oAction) {
               if (oAction === sap.m.MessageBox.Action.YES)
-                this.getModel().remove(sKey)
+                this.getView().getModel().remove(sKey)
             }.bind(this)
           });
         } else {
@@ -207,17 +207,17 @@ sap.ui.define(
           Created: new Date(),
           IntegrationID: null,
         };
-        const oEntry = this.getModel().createEntry("/zjblessons_base_Headers", {
+        const oEntry = this.getView().getModel().createEntry("/zjblessons_base_Headers", {
           properties: oParams,
         });
         oDialog.setBindingContext(oEntry);
       },
       onPressCancel() {
-        this.getModel().resetChanges();
+        this.getView().getModel().resetChanges();
         this._oDialog.destroy();
       },
       onPressSave(oEvent) {
-        this.getModel().submitChanges({
+        this.getView().getModel().submitChanges({
           success: () => {
             this._bindTable();
           },

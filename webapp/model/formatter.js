@@ -3,12 +3,13 @@ sap.ui.define([
 		"use strict";
 
 		return {
-			numberUnit : function (sValue) {
-				if (!sValue) {
-					return "";
-				}
-				return parseFloat(sValue).toFixed(2);
-			}
+			
+			// modifiedFormatter(oData) {
+			// 	const oDateFormatter = sap.iu.core.format.DateFormat.getDateInstance({
+			// 		style: 'Medium'
+			// 	})
+			// 	return oDateFormatter.format(oData);
+			// }
 
 		};
 

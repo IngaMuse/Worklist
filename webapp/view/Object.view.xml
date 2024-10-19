@@ -3,7 +3,6 @@
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core"
-	xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
 >
 	<Page showFooter="false">
@@ -154,7 +153,10 @@
 												<Text text="{Version}"/>
 											</f:FormElement>
 											<f:FormElement label="DocumentDate">
-												<Text text="{DocumentDate}"/>
+												<Text text="{
+												'path': 'DocumentDate',
+                				'type': 'sap.ui.model.type.Date',
+                				'formatOptions': { style: 'short' }}"/>
 											</f:FormElement>
 											<f:FormElement label="PlantText">
 												<Text text="{PlantText}"/>
@@ -165,24 +167,24 @@
 												<f:FormElement label="Description">
 												<Text text="{Description}"/>
 											</f:FormElement>
-											<f:FormElement label="CreatedByAvatar">
-												<Text text="{CreatedByAvatar}"/>
-											</f:FormElement>
-													<f:FormElement label="ModifiedByAvatar">
-												<Text text="{ModifiedByAvatar}"/>
-											</f:FormElement>
 										</f:formElements>
 									</f:FormContainer>
 									<f:FormContainer title="Details">
 										<f:formElements>
 											<f:FormElement label="Created">
-												<Text text="{Created}"/>
+												<Text text="{
+												'path': 'Created',
+                				'type': 'sap.ui.model.type.Date',
+                				'formatOptions': { style: 'short' }}"/>
 											</f:FormElement>
 											<f:FormElement label="CreatedByFullName">
 												<Text text="{CreatedByFullName}"/>
 											</f:FormElement>
 											<f:FormElement label="Modified">
-												<Text text="{Modified}"/>
+												<Text text="{
+												path: 'Modified',
+												formatter: '.formatter.modifiedFormatter'
+												}"/>
 											</f:FormElement>
 											<f:FormElement label="ModifiedByFullName">
 												<Text text="{ModifiedByFullName}"/>

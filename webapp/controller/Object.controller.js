@@ -116,7 +116,9 @@ sap.ui.define([
 			},
 
 			_setEditModel(bValue) {
-				const oModel = this.getModel("objectView");
+				const oModel = this.getModel("objectView"),
+					oITB = this.getView().byId('idIconTabBar')._getIconTabHeader();
+				oITB.setBlocked(bValue);
 				oModel.setProperty('/bEditMode', bValue);
 			},
 
@@ -144,6 +146,11 @@ sap.ui.define([
             }.bind(this)
           });
 			},
+
+			onIconTabBarSelect(oEvent) {
+				const oSelectedKey = oEvent.getParameter('selectedKey');
+				this.getModel('objectView').setProperty('/sSelectedTab', oSelectedKey);
+			}
 		});
 	}
 );

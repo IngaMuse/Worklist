@@ -22,7 +22,7 @@
 						press='onPressEdit'
 						text="{i18n>sEdit}"
 						icon="{i18n>iEditIcon}"
-						visible="{= !${objectView>/bEditMode}}"
+						visible="{= !${objectView>/bEditMode} &amp;&amp; ${objectView>/sSelectedTab} === 'List'}"
 					/>
 					<Button
 						type="Emphasized"
@@ -49,9 +49,12 @@
 		</customHeader>
 		<content>
 			<IconTabBar
+			  enableTabReordering="{= ${objectView>/bEditMode}}"
 				expandable="false"
+				id='idIconTabBar'
 				headerMode="Inline"
 				selectedKey="{= ${objectView>/sSelectedTab}}"
+				select='onIconTabBarSelect'
 			>
 				<items>
 					<IconTabFilter

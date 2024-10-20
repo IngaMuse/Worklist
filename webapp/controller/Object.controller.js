@@ -2,12 +2,14 @@
 sap.ui.define([
 		"zjblessons/Worklist/controller/BaseController",
 		"sap/ui/model/json/JSONModel",
-		"sap/ui/core/routing/History",
+	  "sap/ui/core/routing/History",
+	  "sap/ui/core/Fragment",
 		"zjblessons/Worklist/model/formatter"
 	], function (
 		BaseController,
 		JSONModel,
 		History,
+		Fragment,
 		formatter
 	) {
 		"use strict";
@@ -16,50 +18,25 @@ sap.ui.define([
 
 			formatter: formatter,
 
-			/* =========================================================== */
-			/* lifecycle methods                                           */
-			/* =========================================================== */
-
-			/**
-			 * Called when the worklist controller is instantiated.
-			 * @public
-			 */
 			onInit : function () {
-				// Model used to manipulate control states. The chosen values make sure,
-				// detail page is busy indication immediately so there is no break in
-				// between the busy indication for loading the view's meta data
-				var iOriginalBusyDelay,
-					oViewModel = new JSONModel({
+					const oViewModel = new JSONModel({
 						busy : true,
-						delay : 0
+						delay: 0,
+						sSelectedTab: 'List',
+						bEditMode: false,
+						sVersion: 'A'
 					});
 
 				this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
-
-				// Store original busy indicator delay, so it can be restored later on
-				iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
 				this.setModel(oViewModel, "objectView");
-				this.getOwnerComponent().getModel().metadataLoaded().then(function () {
-						// Restore original busy indicator delay for the object view
-						oViewModel.setProperty("/delay", iOriginalBusyDelay);
-					}
-				);
 			},
 
-			/* =========================================================== */
-			/* event handlers                                              */
-			/* =========================================================== */
-
-
-			/**
-			 * Event handler  for navigating back.
-			 * It there is a history entry we go one step back in the browser history
-			 * If not, it will replace the current entry of the browser history with the worklist route.
-			 * @public
-			 */
 			onNavBack : function() {
-				var sPreviousHash = History.getInstance().getPreviousHash();
+				this._navBack();
+			},
 
+			_navBack() {
+				const sPreviousHash = History.getInstance().getPreviousHash();
 				if (sPreviousHash !== undefined) {
 					history.go(-1);
 				} else {
@@ -67,46 +44,28 @@ sap.ui.define([
 				}
 			},
 
-			/* =========================================================== */
-			/* internal methods                                            */
-			/* =========================================================== */
-
-			/**
-			 * Binds the view to the object path.
-			 * @function
-			 * @param {sap.ui.base.Event} oEvent pattern match event in route 'object'
-			 * @private
-			 */
-			_onObjectMatched : function (oEvent) {
-				var sObjectId =  oEvent.getParameter("arguments").objectId;
+			_onObjectMatched: function (oEvent) {
+				const sObjectId = oEvent.getParameter("arguments").objectId;
 				this.getModel().metadataLoaded().then( function() {
-					var sObjectPath = this.getModel().createKey("zjblessons_base_Headers", {
+					const sObjectPath = this.getModel().createKey("zjblessons_base_Headers", {
 						HeaderID :  sObjectId
 					});
+					const sVersion = this.getView().getModel().getProperty(`/${sObjectPath}/Version`);
+					this.getModel('objectView').setProperty('/sVersion', sVersion);
+					debugger;
 					this._bindView("/" + sObjectPath);
 				}.bind(this));
 			},
 
-			/**
-			 * Binds the view to the object path.
-			 * @function
-			 * @param {string} sObjectPath path to the object to be bound
-			 * @private
-			 */
 			_bindView : function (sObjectPath) {
 				var oViewModel = this.getModel("objectView"),
 					oDataModel = this.getModel();
-
 				this.getView().bindElement({
 					path: sObjectPath,
 					events: {
 						change: this._onBindingChange.bind(this),
 						dataRequested: function () {
 							oDataModel.metadataLoaded().then(function () {
-								// Busy indicator on view should only be set if metadata is loaded,
-								// otherwise there may be two busy indications next to each other on the
-								// screen. This happens because route matched handler already calls '_bindView'
-								// while metadata is loaded.
 								oViewModel.setProperty("/busy", true);
 							});
 						},
@@ -121,27 +80,115 @@ sap.ui.define([
 				var oView = this.getView(),
 					oViewModel = this.getModel("objectView"),
 					oElementBinding = oView.getElementBinding();
-
-				// No data for the binding
 				if (!oElementBinding.getBoundContext()) {
 					this.getRouter().getTargets().display("objectNotFound");
 					return;
 				}
+			},
 
-				var oResourceBundle = this.getResourceBundle(),
-					oObject = oView.getBindingContext().getObject(),
-					sObjectId = oObject.HeaderID,
-					sObjectName = oObject.DocumentNumber;
+			onLinkPressed : function () {
+				this.getRouter().navTo("worklist");
+			},
 
-				oViewModel.setProperty("/busy", false);
+			onPressEdit(){
+				this._setEditModel(true);
+			},
 
-				oViewModel.setProperty("/shareSendEmailSubject",
-				oResourceBundle.getText("shareSendEmailObjectSubject", [sObjectId]));
-				oViewModel.setProperty("/shareSendEmailMessage",
-				oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));
+			onPressSave() {
+				const oModel = this.getModel(),
+					oView = this.getView(),
+					oPendingChanges = oModel.getPendingChanges(),
+					sPath = oView.getBindingContext().getPath().slice(1);
+				if (oPendingChanges.hasOwnProperty(sPath)) {
+					oView.setBusy(true);
+					oModel.submitChanges({
+						success: () => {
+							oView.setBusy(false);
+						},
+						error: () => {
+							oView.setBusy(false);
+						}
+					});
+			}
+				this._setEditModel(false);
+			},
+
+			onPressCancel(){
+				this._setEditModel(false);
+				this.getModel().resetChanges();
+			},
+
+			_setEditModel(bValue) {
+				const oModel = this.getModel("objectView"),
+					oITB = this.getView().byId('idIconTabBar')._getIconTabHeader();
+				oITB.setBlocked(bValue);
+				oModel.setProperty('/bEditMode', bValue);
+			},
+
+			onPressDelete() {
+				const oView = this.getView(),
+					sPath = oView.getBindingContext().getPath();
+          sap.m.MessageBox.confirm(this.getResourceBundle().getText('sMessageConfirmation'), {
+            title: this.getResourceBundle().getText('sTitleConfirmation'),
+						actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+						styleClass: 'sapUiSizeCozy',
+            onClose: function (oAction) {
+							if (oAction === sap.m.MessageBox.Action.YES) {
+								oView.setBusy(true);
+								this.getModel().remove(sPath, {
+								success: function () {
+									oView.setBusy(false);
+									this._navBack();
+								}.bind(this),
+								error: function () {
+									
+								}.bind(this)
+								}
+								)
+							}
+            }.bind(this)
+          });
+			},
+
+			onIconTabBarSelect(oEvent) {
+				const oSelectedKey = oEvent.getParameter('selectedKey');
+				this.getModel('objectView').setProperty('/sSelectedTab', oSelectedKey);
+			},
+
+			onBeforeRendering() {
+					this._bindTemplate();
+			},
+				
+			async _getPlantTemplate() {
+				this._pPlantTemplate ??= await Fragment.load({
+						name: 'zjblessons.Worklist.view.fragment.template.ComboBoxItem',
+						id: this.getView().getId(),
+						controller: this
+					}).then((oTemplate) => {
+						this.getView().addDependent(oTemplate);
+						return oTemplate;
+					})
+				return this._pPlantTemplate
+			},
+
+			async _bindTemplate() {
+				const oComboBox = this.getView().byId('idComboBox'),
+				oTemplate = await this._getPlantTemplate();
+				oComboBox.bindItems({
+					path: '/zjblessons_base_Plants',
+					template: await oTemplate,
+					events: {
+						dataReceived: () => {
+							oComboBox.setBusy(false);
+						},
+						dataRequested: () => {
+							oComboBox.setBusy(true);
+						}
+					}
+				})
 			}
 
-		});
 
+		});
 	}
 );

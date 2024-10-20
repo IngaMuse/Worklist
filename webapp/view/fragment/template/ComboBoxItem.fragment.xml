@@ -1,0 +1,11 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+>
+<c:Item
+    text="{PlantText}"
+    key="{PlantID}"
+>
+    
+</c:Item>
+</c:FragmentDefinition>

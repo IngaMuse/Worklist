@@ -154,7 +154,7 @@ sap.ui.define([
 				this.getModel('objectView').setProperty('/sSelectedTab', oSelectedKey);
 			},
 
-			  onBeforeRendering() {
+			onBeforeRendering() {
 					this._bindTemplate();
 			},
 				

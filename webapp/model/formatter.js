@@ -4,12 +4,13 @@ sap.ui.define([
 
 		return {
 			
-			// modifiedFormatter(oData) {
-			// 	const oDateFormatter = sap.iu.core.format.DateFormat.getDateInstance({
-			// 		style: 'Medium'
-			// 	})
-			// 	return oDateFormatter.format(oData);
-			// }
+			modifiedFormatter(oData) {
+				debugger;
+				const oDateFormatter = sap.ui.core.format.DateFormat.getDateInstance({
+					style: 'medium'
+				})
+				return oDateFormatter.format(oData);
+			}
 
 		};
 

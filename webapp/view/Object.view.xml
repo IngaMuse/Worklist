@@ -100,6 +100,19 @@
 									</VBox>
 								</CustomListItem>
 								<CustomListItem>
+									<VBox class="supUiContentPadding">
+										<Label
+											text="{i18n>PlantTextLabel}"
+											labelFor="PlantID"
+										/>
+										<ComboBox
+												id='idComboBox'
+												selectedKey="{PlantID}"
+											  editable="{= ${objectView>/bEditMode}}"
+										/>
+									</VBox>
+								</CustomListItem>
+								<CustomListItem>
 									<VBox>
 										<Label
 											text="{i18n>DescriptionLabel}"

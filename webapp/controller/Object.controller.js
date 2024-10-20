@@ -2,12 +2,14 @@
 sap.ui.define([
 		"zjblessons/Worklist/controller/BaseController",
 		"sap/ui/model/json/JSONModel",
-		"sap/ui/core/routing/History",
+	  "sap/ui/core/routing/History",
+	  "sap/ui/core/Fragment",
 		"zjblessons/Worklist/model/formatter"
 	], function (
 		BaseController,
 		JSONModel,
 		History,
+		Fragment,
 		formatter
 	) {
 		"use strict";
@@ -150,7 +152,42 @@ sap.ui.define([
 			onIconTabBarSelect(oEvent) {
 				const oSelectedKey = oEvent.getParameter('selectedKey');
 				this.getModel('objectView').setProperty('/sSelectedTab', oSelectedKey);
+			},
+
+			  onBeforeRendering() {
+					this._bindTemplate();
+			},
+				
+			async _getPlantTemplate() {
+				this._pPlantTemplate ??= await Fragment.load({
+						name: 'zjblessons.Worklist.view.fragment.template.ComboBoxItem',
+						id: this.getView().getId(),
+						controller: this
+					}).then((oTemplate) => {
+						this.getView().addDependent(oTemplate);
+						return oTemplate;
+					})
+				return this._pPlantTemplate
+			},
+
+			async _bindTemplate() {
+				const oComboBox = this.getView().byId('idComboBox'),
+				oTemplate = await this._getPlantTemplate();
+				oComboBox.bindItems({
+					path: '/zjblessons_base_Plants',
+					template: await oTemplate,
+					events: {
+						dataReceived: () => {
+							oComboBox.setBusy(false);
+						},
+						dataRequested: () => {
+							oComboBox.setBusy(true);
+						}
+					}
+				})
 			}
+
+
 		});
 	}
 );

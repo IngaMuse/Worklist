@@ -24,7 +24,7 @@ sap.ui.define([
 						delay: 0,
 						sSelectedTab: 'List',
 						bEditMode: false,
-						sVersion: ''
+						sVersion: 'A'
 					});
 
 				this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
@@ -50,7 +50,9 @@ sap.ui.define([
 					const sObjectPath = this.getModel().createKey("zjblessons_base_Headers", {
 						HeaderID :  sObjectId
 					});
-
+					const sVersion = this.getView().getModel().getProperty(`/${sObjectPath}/Version`);
+					this.getModel('objectView').setProperty('/sVersion', sVersion);
+					debugger;
 					this._bindView("/" + sObjectPath);
 				}.bind(this));
 			},
@@ -58,7 +60,6 @@ sap.ui.define([
 			_bindView : function (sObjectPath) {
 				var oViewModel = this.getModel("objectView"),
 					oDataModel = this.getModel();
-
 				this.getView().bindElement({
 					path: sObjectPath,
 					events: {

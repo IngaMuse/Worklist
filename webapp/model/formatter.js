@@ -5,7 +5,6 @@ sap.ui.define([
 		return {
 			
 			modifiedFormatter(oData) {
-				debugger;
 				const oDateFormatter = sap.ui.core.format.DateFormat.getDateInstance({
 					style: 'medium'
 				})

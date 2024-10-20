@@ -42,7 +42,7 @@
 						type="Reject"
 						press='onPressDelete'
 						icon="{i18n>iDeleteIcon}"
-						visible="{= !${objectView>/bEditMode}}"
+						visible="{= !${objectView>/bEditMode} &amp;&amp; ${objectView>/sVersion} === 'D'}"
 					/>
 				</contentRight>
 			</Bar>
@@ -140,7 +140,7 @@
 								editable="true"
 							>
 								<f:title>
-									<core:Title text="Address" />
+									<core:Title text="{i18n>sTitleForm}" />
 								</f:title>
 								<f:layout>
 									<f:ResponsiveGridLayout
@@ -162,25 +162,25 @@
 								<f:formContainers>
 									<f:FormContainer title="Main">
 										<f:formElements>
-											<f:FormElement label="DocumentNumber">
+											<f:FormElement label="{i18n>DocumentNumberLabel}">
 												<Text text="{DocumentNumber}"/>
 											</f:FormElement>
-											<f:FormElement label="Version">
+											<f:FormElement label="{i18n>VersionLabel}">
 												<Text text="{Version}"/>
 											</f:FormElement>
-											<f:FormElement label="DocumentDate">
+											<f:FormElement label="{i18n>DocumentDateLabel}">
 												<Text text="{
 												'path': 'DocumentDate',
                 				'type': 'sap.ui.model.type.Date',
                 				'formatOptions': { style: 'short' }}"/>
 											</f:FormElement>
-											<f:FormElement label="PlantText">
+											<f:FormElement label="{i18n>PlantTextLabel}">
 												<Text text="{PlantText}"/>
 											</f:FormElement>
-												<f:FormElement label="RegionText">
+												<f:FormElement label="{i18n>RegionTextLabel}">
 												<Text text="{RegionText}"/>
 											</f:FormElement>
-												<f:FormElement label="Description">
+												<f:FormElement label="{i18n>DescriptionLabel}">
 												<Text text="{Description}"/>
 											</f:FormElement>
 										</f:formElements>

@@ -1,72 +1,92 @@
-<mvc:View
-	controllerName="zjblessons.Worklist.controller.Worklist"
+<mvc:View controllerName="zjblessons.Worklist.controller.Worklist"
 	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic">
+	xmlns:mvc="sap.ui.core.mvc">
 
-	<semantic:SemanticPage
-		id="page"
-		headerPinnable="false"
-		toggleHeaderOnTitleClick="false">
+	<Page 
+	>
 
-		<semantic:titleHeading>
-			<Title text="{i18n>worklistTitle}" />
-		</semantic:titleHeading>
-
-		<semantic:content>
-			<Table
-				id="table"
-				width="auto"
-				items="{
-					path: '/zjblessons_base_Headers',
-					sorter: {
-						path: 'DocumentNumber',
-						descending: false
-					}
-				}"
-				noDataText="{worklistView>/tableNoDataText}"
-				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+	<customHeader>
+		<Toolbar>
+				<content>
+						<IconTabHeader selectedKey="{= ${worklistView>/sITBKey}}" select="onIconTabHeaderSelect">
+								<items>
+										<IconTabFilter id = '12345' key="All" text = '{i18n>sAll}'/>
+										<IconTabFilter key="Deactivated" text = '{i18n>sDeactivated}'/>
+								</items>
+						</IconTabHeader>
+				</content>
+		</Toolbar>
+	</customHeader>
+		<Table 
+				id='table' 
+				width="auto" 
+				itemPress = 'onItemSelect'
 				growing="true"
-				growingScrollToLoad="true"
-				updateFinished="onUpdateFinished">
+				growingThreshold = "15" 
+				growingScrollToLoad="true" >
+			<headerToolbar>
+				<Toolbar>
+					<Title id='tableHeader' text="({= ${worklistView>/sCount}})"/>
+					<SearchField 
+					id = 'searchField'
+					tooltip="{i18n>worklistSearchTooltip}" 
+					showSearchButton = 'false'
+					change='onSearch' liveChange='onLiveSearch' width="auto">
+					</SearchField>
+					<SearchField 
+					id = 'searchFieldPlantText'
+					tooltip="{i18n>worklistSearchTooltipPlantText}" 
+					placeholder="{i18n>worklistSearchPlaceholder}" 
+					showSearchButton = 'false'
+					change='onSearch' liveChange='onLiveSearch' width="auto">
+					</SearchField>
 
-				<headerToolbar>
-					<Toolbar>
-						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>
-						<ToolbarSpacer />
-						<SearchField
-							id="searchField"
-							tooltip="{i18n>worklistSearchTooltip}"
-							search="onSearch"
-							width="auto">
-						</SearchField>
-					</Toolbar>
-				</headerToolbar>
+					<DateRangeSelection 
+					id = 'searchFieldDocumentDate'
+					tooltip="{i18n>worklistSearchTooltipDocumentDate}" 
+					change='onSearchDate' width="15em"
+					placeholder="{i18n>worklistSearchPlaceholderDocumentDate}">
+					</DateRangeSelection>
 
-				<columns>
-					<Column id="nameColumn">
-						<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>
-					</Column>
-				</columns>
-
-				<items>
-					<ColumnListItem
-						type="Navigation"
-						press="onPress">
-						<cells>
-							<ObjectIdentifier
-								title="{DocumentNumber}"/>
-						</cells>
-					</ColumnListItem>
-				</items>
-			</Table>
-		</semantic:content>
-
-		<semantic:sendEmailAction>
-			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
-		</semantic:sendEmailAction>
-
-
-	</semantic:SemanticPage>
-
+					<ToolbarSpacer />
+					<Button
+							icon="{i18n>iAdd}" 
+							type="Emphasized"
+							press='onPressCreate'
+					/>
+					<Button
+							icon="{i18n>iRefresh}"
+							type="Transparent"
+							press='onPressRefresh'
+					/>
+				</Toolbar>
+			</headerToolbar>
+			<columns>
+				<Column>
+					<Text text="{i18n>tableNameColumnTitle}"/>
+				</Column>
+				<Column>
+					<Text text="{i18n>tableNameColumnTitleDocumentDate}"/>
+				</Column>
+				<Column>
+					<Text text="{i18n>tableNameColumnTitlePlantText}"/>
+				</Column>
+				<Column>
+					<Text text="{i18n>tableNameColumnTitleRegionText}"/>
+				</Column>
+				<Column>
+					<Text text="{i18n>tableNameColumnTitleDescription}"/>
+				</Column>
+				<Column>
+					<Text text="{i18n>tableNameColumnTitleCreated}"/>
+				</Column>
+					<Column width="5%">
+					<Text text=""/>
+				</Column>
+					<Column width="5%">
+					<Text text=""/>
+				</Column>
+			</columns>
+		</Table>
+	</Page>
 </mvc:View>

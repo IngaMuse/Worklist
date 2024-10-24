@@ -52,7 +52,6 @@ sap.ui.define([
 					});
 					const sVersion = this.getView().getModel().getProperty(`/${sObjectPath}/Version`);
 					this.getModel('objectView').setProperty('/sVersion', sVersion);
-					debugger;
 					this._bindView("/" + sObjectPath);
 				}.bind(this));
 			},

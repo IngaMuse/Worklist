@@ -50,6 +50,12 @@
 
 					<ToolbarSpacer />
 					<Button
+							icon="{i18n>iActionIcon}" 
+							text="{i18n>Action11}"
+							type="Emphasized"
+							press="onPressAction($event,$controller,'Action2MultiBatch')"
+					/>
+					<Button
 							icon="{i18n>iAdd}" 
 							type="Emphasized"
 							press='onPressCreate'

@@ -19,7 +19,7 @@ sap.ui.define(
     Filter,
     FilterOperator,
     Fragment,
-    MessageToast,
+    MessageToast
   ) {
     "use strict";
 
@@ -29,7 +29,9 @@ sap.ui.define(
       onInit: function () {
         const oViewModel = new JSONModel({
           sCount: "0",
-          sITBKey: "All"
+          sITBKey: "All",
+          busy: false,
+          busyIndicatorDelay: 0
         });
         this.setModel(oViewModel, "worklistView");
       },
@@ -58,11 +60,13 @@ sap.ui.define(
       },
 
       _getTableCounter() {
-        this.getView().getModel().read("/zjblessons_base_Headers/$count", {
-          success: (sCount) => {
-            this.getModel("worklistView").setProperty("/sCount", sCount);
-          },
-        });
+        this.getView()
+          .getModel()
+          .read("/zjblessons_base_Headers/$count", {
+            success: (sCount) => {
+              this.getModel("worklistView").setProperty("/sCount", sCount);
+            },
+          });
       },
 
       _getTableTemplate() {
@@ -98,76 +102,94 @@ sap.ui.define(
             }),
             new sap.m.Switch({
               state: "{= ${Version} === 'D'}",
-              change: this._changeVersion.bind(this)
+              change: this._changeVersion.bind(this),
             }),
             new sap.m.Button({
-              type: 'Transparent',
-              icon: this.getResourceBundle().getText('iDecline'),
-              press: this._onPressDelete.bind(this)
-            })
+              type: "Transparent",
+              icon: this.getResourceBundle().getText("iDecline"),
+              press: this._onPressDelete.bind(this),
+            }),
           ],
         });
         return oTemplate;
       },
 
       _changeVersion(oEvent) {
-        const sVersion = oEvent.getParameter('state') ? 'D' : 'A',
+        const sVersion = oEvent.getParameter("state") ? "D" : "A",
           sPath = oEvent.getSource().getBindingContext().getPath();
         this.getView().getModel().setProperty(`${sPath}/Version`, sVersion);
         this.getView().getModel().setRefreshAfterChange(false);
         this.getView().getModel().submitChanges();
         this.getView().getModel().setRefreshAfterChange(true);
       },
-      
+
       _getTableFilters() {
-        const oWorklistModel = this.getModel('worklistView'),
-          sSelectedKey = oWorklistModel.getProperty('/sITBKey');
-        return sSelectedKey === 'All' ? [] : [new Filter('Version', FilterOperator.EQ, 'D')];
+        const oWorklistModel = this.getModel("worklistView"),
+          sSelectedKey = oWorklistModel.getProperty("/sITBKey");
+        return sSelectedKey === "All"
+          ? []
+          : [new Filter("Version", FilterOperator.EQ, "D")];
       },
 
       _onPressDelete(oEvent) {
         const oBindingContext = oEvent.getSource().getBindingContext(),
-          sKey = this.getView().getModel().createKey('/zjblessons_base_Headers', {
-            HeaderID: oBindingContext.getProperty('HeaderID')
-          });
-        if (oBindingContext.getProperty('Version') === 'D') {
-          sap.m.MessageBox.confirm(this.getResourceBundle().getText('sMessageConfirmation'), {
-            title: this.getResourceBundle().getText('sTitleConfirmation'),
-            actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
-            onClose: function (oAction) {
-              if (oAction === sap.m.MessageBox.Action.YES)
-                this.getView().getModel().remove(sKey)
-            }.bind(this)
-          });
+          sKey = this.getView()
+            .getModel()
+            .createKey("/zjblessons_base_Headers", {
+              HeaderID: oBindingContext.getProperty("HeaderID"),
+            });
+        if (oBindingContext.getProperty("Version") === "D") {
+          sap.m.MessageBox.confirm(
+            this.getResourceBundle().getText("sMessageConfirmation"),
+            {
+              title: this.getResourceBundle().getText("sTitleConfirmation"),
+              actions: [
+                sap.m.MessageBox.Action.YES,
+                sap.m.MessageBox.Action.NO,
+              ],
+              onClose: function (oAction) {
+                if (oAction === sap.m.MessageBox.Action.YES)
+                  this.getView().getModel().remove(sKey);
+              }.bind(this),
+            }
+          );
         } else {
-          MessageToast.show(this.getResourceBundle().getText('sDeleteVersionD'), { at: "center center" });
+          MessageToast.show(
+            this.getResourceBundle().getText("sDeleteVersionD"),
+            { at: "center center" }
+          );
         }
       },
 
       onPressRefresh() {
-        MessageToast.show(this.getResourceBundle().getText('sRefresh'));
+        MessageToast.show(this.getResourceBundle().getText("sRefresh"));
         this._bindTable();
       },
 
       onSearch(oEvent) {
         const sValue = oEvent.getParameter("value");
         let sValueType;
-        oEvent.getSource().sId.includes('Plant') ? sValueType = "Plant" : sValueType = "Search";
+        oEvent.getSource().sId.includes("Plant")
+          ? (sValueType = "Plant")
+          : (sValueType = "Search");
         this._searchHandler(sValue, sValueType);
         debugger;
       },
       onLiveSearch(oEvent) {
         const sValue = oEvent.getParameter("newValue");
         let sValueType;
-        oEvent.getSource().sId.includes('Plant') ? sValueType = "Plant" : sValueType = "Search";
+        oEvent.getSource().sId.includes("Plant")
+          ? (sValueType = "Plant")
+          : (sValueType = "Search");
         this._searchHandler(sValue, sValueType);
       },
 
       _searchHandler(sValue, sValueType) {
         const oTable = this.getView().byId("table"),
           oFilter = !!sValue.length
-            ? sValueType==="Search"?new Filter('DocumentNumber', FilterOperator.Contains, sValue):
-            new Filter('PlantText', FilterOperator.EQ, sValue)
+            ? sValueType === "Search"
+              ? new Filter("DocumentNumber", FilterOperator.Contains, sValue)
+              : new Filter("PlantText", FilterOperator.EQ, sValue)
             : [];
         oTable.getBinding("items").filter(oFilter);
       },
@@ -176,8 +198,15 @@ sap.ui.define(
         const sFrom = oEvent.getParameter("from"),
           sTo = oEvent.getParameter("to"),
           oTable = this.getView().byId("table");
-        if ((sFrom && sTo)) {
-          const oFilters = [new Filter("DocumentDate", sap.ui.model.FilterOperator.BT, sFrom, sTo)];
+        if (sFrom && sTo) {
+          const oFilters = [
+            new Filter(
+              "DocumentDate",
+              sap.ui.model.FilterOperator.BT,
+              sFrom,
+              sTo
+            ),
+          ];
           oTable.getBinding("items").filter(oFilters);
         } else {
           oTable.getBinding("items").filter([]);
@@ -208,9 +237,11 @@ sap.ui.define(
           Created: new Date(),
           IntegrationID: null,
         };
-        const oEntry = this.getView().getModel().createEntry("/zjblessons_base_Headers", {
-          properties: oParams,
-        });
+        const oEntry = this.getView()
+          .getModel()
+          .createEntry("/zjblessons_base_Headers", {
+            properties: oParams,
+          });
         oDialog.setBindingContext(oEntry);
       },
       onPressCancel() {
@@ -218,28 +249,76 @@ sap.ui.define(
         this._oDialog.destroy();
       },
       onPressSave(oEvent) {
-        this.getView().getModel().submitChanges({
-          success: () => {
-            this._bindTable();
-          },
-        });
+        this.getView()
+          .getModel()
+          .submitChanges({
+            success: () => {
+              this._bindTable();
+            },
+          });
         this._oDialog.destroy();
       },
 
       onIconTabHeaderSelect(oEvent) {
-        const oSelectedKey = oEvent.getParameter('key');
-        this.getModel('worklistView').setProperty('/sITBKey', oSelectedKey);
+        const oSelectedKey = oEvent.getParameter("key");
+        this.getModel("worklistView").setProperty("/sITBKey", oSelectedKey);
         this._bindTable();
       },
 
       onItemSelect(oEvent) {
-        const oSelectedItem = oEvent.getParameter('listItem'),
-          sHeaderID = oSelectedItem.getBindingContext().getProperty('HeaderID');
-        this.getRouter().navTo('object', {
-          objectId: sHeaderID
-        })
-      }
+        const oSelectedItem = oEvent.getParameter("listItem"),
+          sHeaderID = oSelectedItem.getBindingContext().getProperty("HeaderID");
+        this.getRouter().navTo("object", {
+          objectId: sHeaderID,
+        });
+      },
 
+      onPressAction(oEvent, oController, oAction) {
+        this._PopupDescriptionOpen(oEvent, oController, oAction);
+      },
+
+      _PopupDescriptionOpen: function (oEvent, oController, oAction) {
+        const aSource = oEvent.getSource();
+        if (this._PopupDescription === undefined) {
+          sap.ui.core.Fragment.load({
+            id: "PopupDescription",
+            type: "XML",
+            controller: this,
+            definition:
+              '<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">' +
+              '	<Dialog title="Enter description:" contentWidth="200px" contentHeight="110px" busy="{worklistView>/busy}" busyIndicatorDelay="{worklistView>/busyIndicatorDelay}" titleAlignment="Center">' +
+              '		<Page showHeader="false" class="sapUiContentPadding"><content>' +
+              '<Input id="iDescription"></Input>' +
+              "			</content><footer><Toolbar><ToolbarSpacer/>" +
+              '					<Button text="{i18n>btnExecute}" press="PopupDescriptionExecute($event,$controller,\'' +
+              oAction +
+              '\')" type="Default"/>' +
+              '					<Button text="{i18n>btnCancel}" press="PopupDescriptionClose($event,$controller)" type="Default"/>' +
+              "			</Toolbar></footer>" +
+              "		</Page>" +
+              "	</Dialog>" +
+              "</core:FragmentDefinition>",
+          }).then(
+            function (oDialog) {
+              this._PopupDescription = oDialog;
+              this._PopupDescription._Source = aSource;
+              this.getView().addDependent(oDialog);
+              this._PopupDescription.open();
+            }.bind(this)
+          );
+        } else {
+          this._PopupDescription._Source = aSource;
+          this._PopupDescription.open();
+        }
+      },
+
+      PopupDescriptionClose: function (oEvent, oController) {
+        this._PopupDescription.setBusy(false);
+        this._PopupDescription.destroy();
+        this._PopupDescription = undefined;
+      },
+
+      
     });
   }
 );

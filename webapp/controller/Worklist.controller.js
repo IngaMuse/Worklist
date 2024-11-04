@@ -8,6 +8,7 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/core/Fragment",
     "sap/m/MessageToast",
+    "sap/m/MessageBox",
     "sap/m/Switch",
     "sap/m/SwitchType",
   ],
@@ -19,7 +20,8 @@ sap.ui.define(
     Filter,
     FilterOperator,
     Fragment,
-    MessageToast
+    MessageToast,
+    MessageBox
   ) {
     "use strict";
 
@@ -31,7 +33,7 @@ sap.ui.define(
           sCount: "0",
           sITBKey: "All",
           busy: false,
-          busyIndicatorDelay: 0
+          busyIndicatorDelay: 0,
         });
         this.setModel(oViewModel, "worklistView");
       },
@@ -293,7 +295,7 @@ sap.ui.define(
               '					<Button text="{i18n>btnExecute}" press="PopupDescriptionExecute($event,$controller,\'' +
               oAction +
               '\')" type="Default"/>' +
-              '					<Button text="{i18n>btnCancel}" press="PopupDescriptionClose($event,$controller)" type="Default"/>' +
+              '					<Button text="{i18n>btnCancel}" press="PopupDescriptionClose()" type="Default"/>' +
               "			</Toolbar></footer>" +
               "		</Page>" +
               "	</Dialog>" +
@@ -312,13 +314,65 @@ sap.ui.define(
         }
       },
 
-      PopupDescriptionClose: function (oEvent, oController) {
+      PopupDescriptionClose: function () {
         this._PopupDescription.setBusy(false);
         this._PopupDescription.destroy();
         this._PopupDescription = undefined;
       },
 
-      
+      PopupDescriptionExecute: function (oEvent, oController, oAction) {
+        this._PopupDescription.setBusy(true);
+        debugger;
+        if (oAction === "Action2MultiBatch") {
+          this.execAction2MultiBatch();
+        }
+      },
+      execAction2MultiBatch: function () {
+        const iDescription = sap.ui.core.Fragment.byId(
+          "PopupDescription",
+          "iDescription"
+        );
+        const sValueInput = iDescription.getValue();
+        switch (sValueInput) {
+          case "":
+            this.errorWrongValue();
+            break;
+          case "1":
+            this.errorCritical();
+            break;
+          case "2":
+            this.caseSuccessExecuted();
+            break;
+          case "3":
+            this.caseErrorExecuted();
+            break;
+          default:
+            this.changeAllDescription();
+        }
+        this.PopupDescriptionClose();
+      },
+
+      errorWrongValue() {
+        MessageBox.error(this.getResourceBundle().getText("SomethingWrong"));
+      },
+      errorCritical() {
+        MessageBox.error(
+          this.getResourceBundle().getText("CriticalError")
+        );
+      },
+      caseSuccessExecuted() {
+        MessageToast.show(
+          this.getResourceBundle().getText("ExecutedSuccess"),
+        );
+      },
+      caseErrorExecuted() {
+        MessageToast.show(
+          this.getResourceBundle().getText("ExecutedError"),
+        );
+      },
+      changeAllDescription() {
+        
+      }
     });
   }
 );

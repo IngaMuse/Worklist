@@ -27,6 +27,7 @@
 			<headerToolbar>
 				<Toolbar>
 					<Title id='tableHeader' text="({= ${worklistView>/sCount}})"/>
+					<FlexBox wrap="Wrap">
 					<SearchField 
 					id = 'searchField'
 					tooltip="{i18n>worklistSearchTooltip}" 
@@ -47,7 +48,7 @@
 					change='onSearchDate' width="15em"
 					placeholder="{i18n>worklistSearchPlaceholderDocumentDate}">
 					</DateRangeSelection>
-
+					</FlexBox>
 					<ToolbarSpacer />
 					<Button
 							icon="{i18n>iActionIcon}" 

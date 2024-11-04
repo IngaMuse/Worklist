@@ -322,12 +322,12 @@ sap.ui.define(
 
       PopupDescriptionExecute: function (oEvent, oController, oAction) {
         this._PopupDescription.setBusy(true);
-        debugger;
         if (oAction === "Action2MultiBatch") {
           this.execAction2MultiBatch();
         }
+
       },
-      execAction2MultiBatch: function () {
+      execAction2MultiBatch: async function () {
         const iDescription = sap.ui.core.Fragment.byId(
           "PopupDescription",
           "iDescription"
@@ -347,7 +347,8 @@ sap.ui.define(
             this.caseErrorExecuted();
             break;
           default:
-            this.changeAllDescription();
+            await this.changeAllDescription(sValueInput);
+            break;
         }
         this.PopupDescriptionClose();
       },
@@ -356,23 +357,49 @@ sap.ui.define(
         MessageBox.error(this.getResourceBundle().getText("SomethingWrong"));
       },
       errorCritical() {
-        MessageBox.error(
-          this.getResourceBundle().getText("CriticalError")
-        );
+        MessageBox.error(this.getResourceBundle().getText("CriticalError"));
       },
       caseSuccessExecuted() {
-        MessageToast.show(
-          this.getResourceBundle().getText("ExecutedSuccess"),
-        );
+        MessageToast.show(this.getResourceBundle().getText("ExecutedSuccess"));
       },
       caseErrorExecuted() {
-        MessageToast.show(
-          this.getResourceBundle().getText("ExecutedError"),
-        );
+        MessageToast.show(this.getResourceBundle().getText("ExecutedError"));
       },
-      changeAllDescription() {
-        
+      changeAllDescription: async function(sValueInput) {
+        const oTable = this.byId("table"),
+          oModel = this.getView().getModel(),
+          aItems = oTable.getItems(),
+          promises = [];
+        console.log(aItems);
+        aItems.forEach(function (oItem) {
+          const oContext = oItem.getBindingContext();
+          const sPath = oContext.getPath();
+          const updatePromise = new Promise((resolve, reject) => {
+            oModel.update(
+              sPath,
+              {
+                Description: sValueInput,
+              },
+              {
+                success: function () {
+                  MessageToast.show("Executed Success");
+                  resolve();
+                },
+                error: function () {
+                  MessageToast.show("Executed Error");
+                  reject();
+                },
+              }
+            );
+          });
+          promises.push(updatePromise);
+        });
+        try {
+          await Promise.all(promises);
+      } catch (error) {
+          console.error(error);
       }
+      },
     });
   }
 );

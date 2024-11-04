@@ -24,7 +24,6 @@
 				mode="MultiSelect"
 				selectionChange=".onSelectionChange"
 				growing="true"
-				growingThreshold = "15" 
 				growingScrollToLoad="true" >
 			<headerToolbar>
 				<OverflowToolbar>
@@ -71,7 +70,7 @@
 							icon="{i18n>iActionIcon}" 
 							text="{i18n>Action11}"
 							type="Emphasized"
-							press="onPressAction($event,$controller,'Action2MultiBatch')"
+							press="onPressAction($event,$controller,'Action11MultiBatch')"
 					/>
 					<Button
 							icon="{i18n>iAdd}" 

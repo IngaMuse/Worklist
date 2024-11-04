@@ -34,7 +34,7 @@ sap.ui.define(
           sITBKey: "All",
           busy: false,
           busyIndicatorDelay: 0,
-          sSelectedItems:0
+          sSelectedItems: 0,
         });
         this.setModel(oViewModel, "worklistView");
       },
@@ -323,12 +323,15 @@ sap.ui.define(
 
       PopupDescriptionExecute: function (oEvent, oController, oAction) {
         this._PopupDescription.setBusy(true);
-        if (oAction === "Action2MultiBatch") {
+        if (oAction === "Action11MultiBatch") {
+          this.execAction11MultiBatch();
+        } else if (oAction === "Action2MultiBatch") {
           this.execAction2MultiBatch();
-        }
-
+        } else this.execAction2Multi();
       },
-      execAction2MultiBatch: async function () {
+      execAction11MultiBatch: async function () {
+        const oModel = this.getView().getModel();
+        oModel.setUseBatch(true);
         const iDescription = sap.ui.core.Fragment.byId(
           "PopupDescription",
           "iDescription"
@@ -348,9 +351,31 @@ sap.ui.define(
             this.caseErrorExecuted();
             break;
           default:
-            await this.changeAllDescription(sValueInput);
+            await this.changeAllDescription(sValueInput, true);
             break;
         }
+        this.PopupDescriptionClose();
+      },
+      execAction2MultiBatch: async function () {
+        const oModel = this.getView().getModel();
+        oModel.setUseBatch(true);
+        const iDescription = sap.ui.core.Fragment.byId(
+          "PopupDescription",
+          "iDescription"
+        );
+        const sValueInput = iDescription.getValue();
+        await this.changeAllDescription(sValueInput, false);
+        this.PopupDescriptionClose();
+      },
+      execAction2Multi: async function () {
+        const oModel = this.getView().getModel();
+        oModel.setUseBatch(false);
+        const iDescription = sap.ui.core.Fragment.byId(
+          "PopupDescription",
+          "iDescription"
+        );
+        const sValueInput = iDescription.getValue();
+        await this.changeAllDescription(sValueInput, false);
         this.PopupDescriptionClose();
       },
 
@@ -372,15 +397,19 @@ sap.ui.define(
           aSelectedItems = oTable.getSelectedItems(),
           oButtonAction2Batch = this.byId("myButtonAction2Batch"),
           oButtonAction2 = this.byId("myButtonAction2");
-          oButtonAction2Batch.setEnabled(aSelectedItems.length > 0);
-          oButtonAction2.setEnabled(aSelectedItems.length > 0);
+        oButtonAction2Batch.setEnabled(aSelectedItems.length > 0);
+        oButtonAction2.setEnabled(aSelectedItems.length > 0);
       },
-      changeAllDescription: async function(sValueInput) {
+      changeAllDescription: async function (sValueInput, bIsAllSelected) {
         const oTable = this.byId("table"),
-          oModel = this.getView().getModel(),
-          aItems = oTable.getItems(),
-          promises = [];
-        console.log(aItems);
+              oModel = this.getView().getModel();
+        let aItems = [];
+        if (bIsAllSelected) {
+          aItems = oTable.getItems();
+        } else {
+          aItems = oTable.getSelectedItems();
+        }
+        const promises = [];
         aItems.forEach(function (oItem) {
           const oContext = oItem.getBindingContext();
           const sPath = oContext.getPath();
@@ -406,9 +435,9 @@ sap.ui.define(
         });
         try {
           await Promise.all(promises);
-      } catch (error) {
+        } catch (error) {
           console.error(error);
-      }
+        }
       },
     });
   }

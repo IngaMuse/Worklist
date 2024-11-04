@@ -21,13 +21,14 @@
 				id='table' 
 				width="auto" 
 				itemPress = 'onItemSelect'
+				mode="MultiSelect"
+				selectionChange=".onSelectionChange"
 				growing="true"
 				growingThreshold = "15" 
 				growingScrollToLoad="true" >
 			<headerToolbar>
-				<Toolbar>
+				<OverflowToolbar>
 					<Title id='tableHeader' text="({= ${worklistView>/sCount}})"/>
-					<FlexBox wrap="Wrap">
 					<SearchField 
 					id = 'searchField'
 					tooltip="{i18n>worklistSearchTooltip}" 
@@ -48,8 +49,24 @@
 					change='onSearchDate' width="15em"
 					placeholder="{i18n>worklistSearchPlaceholderDocumentDate}">
 					</DateRangeSelection>
-					</FlexBox>
+
 					<ToolbarSpacer />
+						<Button
+						  id="myButtonAction2Batch"
+							icon="{i18n>iActionIcon}" 
+							text="{i18n>Action2} batch=true"
+							type="Emphasized"
+							press="onPressAction($event,$controller,'Action2MultiBatch')"
+							enabled="false"
+					/>
+					<Button
+							id="myButtonAction2"
+							icon="{i18n>iActionIcon}" 
+							text="{i18n>Action2} batch=false"
+							type="Emphasized"
+							press="onPressAction($event,$controller,'Action2Multi')"
+							enabled="false"
+					/>
 					<Button
 							icon="{i18n>iActionIcon}" 
 							text="{i18n>Action11}"
@@ -66,7 +83,7 @@
 							type="Transparent"
 							press='onPressRefresh'
 					/>
-				</Toolbar>
+				</OverflowToolbar>
 			</headerToolbar>
 			<columns>
 				<Column>

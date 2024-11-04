@@ -34,6 +34,7 @@ sap.ui.define(
           sITBKey: "All",
           busy: false,
           busyIndicatorDelay: 0,
+          sSelectedItems:0
         });
         this.setModel(oViewModel, "worklistView");
       },
@@ -364,6 +365,15 @@ sap.ui.define(
       },
       caseErrorExecuted() {
         MessageToast.show(this.getResourceBundle().getText("ExecutedError"));
+      },
+
+      onSelectionChange: function () {
+        const oTable = this.byId("table"),
+          aSelectedItems = oTable.getSelectedItems(),
+          oButtonAction2Batch = this.byId("myButtonAction2Batch"),
+          oButtonAction2 = this.byId("myButtonAction2");
+          oButtonAction2Batch.setEnabled(aSelectedItems.length > 0);
+          oButtonAction2.setEnabled(aSelectedItems.length > 0);
       },
       changeAllDescription: async function(sValueInput) {
         const oTable = this.byId("table"),
